@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 
 import QueryGetUser from "../../GraphQL/QueryGetUser";
-import MutationPutUser from "../../GraphQL/MutationPutUser";
 import MutationCreateUser from "../../GraphQL/MutationCreateUser";
 import MutationUpdateUser from "../../GraphQL/MutationUpdateUser";
 import QueryAllUsers from "../../GraphQL/QueryAllUsers";

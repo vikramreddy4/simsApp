@@ -16,45 +16,22 @@ import ViewEvent from './Components/ViewEvent';
 import ViewUser from './Components/users/ViewUser';
 import ContactsList from './Components/contacts/ContactsList';
 import UsersList from './Components/users/UsersList';
+import ViewProduct from './Components/products/View';
+import ProductsList from './Components/products/List';
 
 const Home = () => (
   <div className="ui container">
     <Link to={`/`}>Home</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-    <Link to={`/events`}>Events</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
     <Link to={`/users`}>Users</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-    <Link to={`/stock`}>Inventory</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
     <Link to={`/products`}>Products</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-    <Link to={`/newEvent`}>New Event</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-    <Link to={`/contacts`}>Contacts</Link>
   </div>
+  /*
+  <Link to={`/events`}>Events</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <Link to={`/stock`}>Inventory</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <Link to={`/newEvent`}>New Event</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <Link to={`/contacts`}>Contacts</Link>
+  */
 );
-/*
-const Home = () => (
-  <div className="ui container">
-    <h1 className="ui header">Index</h1>
-    <Link to={`/events`} className="card">
-        <div className="content">
-            Events
-        </div>
-    </Link>
-    <Link to={`/stock`} className="card">
-        <div className="content">
-            Inventory
-        </div>
-    </Link>
-    <Link to={`/products`} className="card">
-        <div className="content">
-            Products
-        </div>
-    </Link>
-    <Link to={`/eventsList`} className="card">
-        <div className="content">
-            Users
-        </div>
-    </Link>
-  </div>
-);
-*/
 const EventsList = () => (
   <div className="ui container">
     <Home/>
@@ -73,6 +50,8 @@ const App = () => (
       <Route path="/user/:id" component={ViewUser} />
       <Route path="/event/:id" component={ViewEvent} />
       <Route path="/newEvent" component={NewEvent} />
+      <Route path="/products" component={ProductsList} />
+      <Route path="/product/:id" component={ViewProduct} />
     </div>
   </Router>
 );

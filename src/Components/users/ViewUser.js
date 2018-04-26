@@ -6,7 +6,6 @@ import { v4 as uuid } from "uuid";
 import QueryGetUser from "../../GraphQL/QueryGetUser";
 import MutationCreateUser from "../../GraphQL/MutationCreateUser";
 import MutationUpdateUser from "../../GraphQL/MutationUpdateUser";
-import QueryAllUsers from "../../GraphQL/QueryAllUsers";
 
 class ViewUser extends Component {
 

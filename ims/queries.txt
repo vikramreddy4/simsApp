@@ -1,0 +1,82 @@
+query GetPartner {
+	getPartner(id: 1) {
+		 id
+		 name
+		 active
+	}
+}
+mutation PutPartner {
+	putPartner(id: 1, name: "Partner1", active:"Y") {
+		 id
+		 name
+		 active
+	}
+}
+
+query listUsers {
+  listUsers {
+		items {
+      id
+      name
+    }
+  }
+}
+query GetUser {
+	getUser(id: 1) {
+		 id
+		 name
+		 userId
+		 password
+		 accessCode
+		 partnerId
+		 active
+	}
+}
+query queryUsersByUserIdIndex {
+	queryUsersByUserIdIndex(userId: "userId1") {
+	items {
+   		 id
+		 name
+		 userId
+		 password
+		 accessCode
+		 partnerId
+		 active
+
+  }
+  }
+}
+mutation PutProduct {
+	putProduct(id: "1", name:"Product1", description: "Product dexcription 1", partnerId:1, active:"Y", quantity: 7.0, units: "Grams") {
+		id
+    name
+		description
+		partnerId
+    active
+		quantity
+		units
+	}
+}
+mutation PutUser {
+	putUser(id: "xxx1", name: "User1-1", userId: "userId1-1", accessCode: "6789-1") {
+		 id
+		 name
+		 userId
+		 accessCode
+	}
+}
+mutation createUser {
+	createUser(name: "User1244-2", userId: "userI1d1-2", accessCode: "678-2") {
+		 name
+		 userId
+		 accessCode
+	}
+}
+mutation updateUser {
+	updateUser(input:{id: "xxx121", name: "User1244-1", userId: "userI1d1-1", accessCode: "678-1"}) {
+		 id
+		 name
+		 userId
+		 accessCode
+	}
+}

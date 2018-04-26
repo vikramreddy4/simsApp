@@ -7,5 +7,6 @@ query($id: ID!) {
     name
     accessCode
     userId
+    active
   }
 }`);

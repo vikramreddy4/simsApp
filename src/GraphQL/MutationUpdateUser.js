@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export default gql(`
-mutation($id: ID! $name: String! $accessCode: String! $userId: String! $active: Boolean!) {
-  createUser(input:
+mutation($id: ID! $name: String $accessCode: String $userId: String $active: Boolean) {
+  updateUser(input:
     {
       id: $id
       name: $name

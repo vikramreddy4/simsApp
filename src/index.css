@@ -3,3 +3,4 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+.error { border: 1px solid red; background-color : #d1d1d1; input.input-box, textarea { background: cyan; }}

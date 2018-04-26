@@ -1,0 +1,315 @@
+input CreatePartnerInput {
+	id: ID!
+	name: String!
+	active: String!
+}
+
+input CreateProductInput {
+	id: ID!
+	name: String!
+	description: String!
+	active: String!
+	partnerId: String!
+	quantity: Float!
+	units: Float!
+	name_partnerId: String!
+}
+
+input CreateStockInput {
+	id: ID!
+	description: String!
+	partnerId: String!
+	productId: String!
+	userId: Int
+	type: String!
+	when: String!
+	partnerId_when: String!
+	partnerId_productId: String!
+}
+
+input CreateUserInput {
+	id: ID!
+	name: String!
+	userId: String
+	password: String
+	accessCode: String!
+	partnerId: String!
+	active: String!
+	accessCode_partnerId: String!
+}
+
+input DeletePartnerInput {
+	id: ID!
+}
+
+input DeleteProductInput {
+	id: ID!
+}
+
+input DeleteStockInput {
+	id: ID!
+}
+
+input DeleteUserInput {
+	id: ID!
+}
+
+type Mutation {
+	putPartner(id: ID!, name: String!, active: String!): Partner
+	putUser(
+		id: ID!,
+		name: String!,
+		userId: String,
+		password: String,
+		accessCode: String!,
+		partnerId: String!,
+		active: String!,
+		accessCode_partnerId: String!
+	): User
+	putProduct(
+		id: ID!,
+		name: String!,
+		description: String!,
+		partnerId: String!,
+		active: String!,
+		quantity: Float!,
+		units: String!,
+		name_partnerId: String!
+	): Product
+	putStock(
+		id: ID!,
+		description: String!,
+		productId: String!,
+		userId: Int!,
+		type: String!,
+		partnerId: String!,
+		when: String!,
+		partnerId_when: String!,
+		partnerId_productId: String!
+	): Stock
+	createPartner(input: CreatePartnerInput!): Partner
+	updatePartner(input: UpdatePartnerInput!): Partner
+	deletePartner(input: DeletePartnerInput!): Partner
+	createProduct(input: CreateProductInput!): Product
+	updateProduct(input: UpdateProductInput!): Product
+	deleteProduct(input: DeleteProductInput!): Product
+	createUser(input: CreateUserInput!): User
+	updateUser(input: UpdateUserInput!): User
+	deleteUser(input: DeleteUserInput!): User
+	createStock(input: CreateStockInput!): Stock
+	updateStock(input: UpdateStockInput!): Stock
+	deleteStock(input: DeleteStockInput!): Stock
+}
+
+type Partner {
+	id: ID!
+	name: String!
+	active: String!
+}
+
+type PartnerConnection {
+	items: [Partner]
+	nextToken: String
+}
+
+type Product {
+	id: ID!
+	name: String!
+	description: String!
+	active: String!
+	partnerId: String!
+	quantity: Float!
+	units: Float!
+	name_partnerId: String!
+}
+
+type ProductConnection {
+	items: [Product]
+	nextToken: String
+}
+
+type Query {
+	singlePartner(id: ID!): Partner
+	getPartners: [Partner]
+	singleUser(id: ID!): User
+	getUsers: [User]
+	singleProduct(id: ID!): Product
+	getProducts: [Product]
+	singleStock(id: ID!): Stock
+	getStocks: [Stock]
+	getPartner(id: ID!): Partner
+	listPartners(first: Int, after: String): PartnerConnection
+	getProduct(id: ID!): Product
+	listProducts(first: Int, after: String): ProductConnection
+	queryProductsByPartnerIdIndex(partnerId: String!, first: Int, after: String): ProductConnection
+	queryProductsByNamePartnerIdIndex(name_partnerId: String!, first: Int, after: String): ProductConnection
+	getUser(id: ID!): User
+	listUsers(first: Int, after: String): UserConnection
+	queryUsersByPartnerIdIndex(partnerId: String!, first: Int, after: String): UserConnection
+	queryUsersByAccessCodePartnerIdIndex(accessCode_partnerId: String!, first: Int, after: String): UserConnection
+	getStock(id: ID!): Stock
+	listStocks(first: Int, after: String): StockConnection
+	queryStocksByPartnerIdIndex(partnerId: String!, first: Int, after: String): StockConnection
+	queryStocksByPartnerIdWhenIndex(partnerId_when: String!, first: Int, after: String): StockConnection
+	queryStocksByPartnerIdProductIdIndex(partnerId_productId: String!, first: Int, after: String): StockConnection
+}
+
+type Stock {
+	id: ID!
+	description: String!
+	partnerId: String!
+	productId: String!
+	userId: Int
+	type: String!
+	when: String!
+	partnerId_when: String!
+	partnerId_productId: String!
+}
+
+type StockConnection {
+	items: [Stock]
+	nextToken: String
+}
+
+type Subscription {
+	onCreatePartner(id: ID, name: String, active: String): Partner
+		@aws_subscribe(mutations: ["createPartner"])
+	onUpdatePartner(id: ID, name: String, active: String): Partner
+		@aws_subscribe(mutations: ["updatePartner"])
+	onDeletePartner(id: ID, name: String, active: String): Partner
+		@aws_subscribe(mutations: ["deletePartner"])
+	onCreateProduct(
+		id: ID,
+		name: String,
+		description: String,
+		active: String,
+		partnerId: String
+	): Product
+		@aws_subscribe(mutations: ["createProduct"])
+	onUpdateProduct(
+		id: ID,
+		name: String,
+		description: String,
+		active: String,
+		partnerId: String
+	): Product
+		@aws_subscribe(mutations: ["updateProduct"])
+	onDeleteProduct(
+		id: ID,
+		name: String,
+		description: String,
+		active: String,
+		partnerId: String
+	): Product
+		@aws_subscribe(mutations: ["deleteProduct"])
+	onCreateUser(
+		id: ID,
+		name: String,
+		userId: String,
+		password: String,
+		accessCode: String
+	): User
+		@aws_subscribe(mutations: ["createUser"])
+	onUpdateUser(
+		id: ID,
+		name: String,
+		userId: String,
+		password: String,
+		accessCode: String
+	): User
+		@aws_subscribe(mutations: ["updateUser"])
+	onDeleteUser(
+		id: ID,
+		name: String,
+		userId: String,
+		password: String,
+		accessCode: String
+	): User
+		@aws_subscribe(mutations: ["deleteUser"])
+	onCreateStock(
+		id: ID,
+		description: String,
+		partnerId: String,
+		productId: String,
+		userId: Int
+	): Stock
+		@aws_subscribe(mutations: ["createStock"])
+	onUpdateStock(
+		id: ID,
+		description: String,
+		partnerId: String,
+		productId: String,
+		userId: Int
+	): Stock
+		@aws_subscribe(mutations: ["updateStock"])
+	onDeleteStock(
+		id: ID,
+		description: String,
+		partnerId: String,
+		productId: String,
+		userId: Int
+	): Stock
+		@aws_subscribe(mutations: ["deleteStock"])
+}
+
+input UpdatePartnerInput {
+	id: ID!
+	name: String
+	active: String
+}
+
+input UpdateProductInput {
+	id: ID!
+	name: String
+	description: String
+	active: String
+	partnerId: String
+	quantity: Float
+	units: Float
+	name_partnerId: String
+}
+
+input UpdateStockInput {
+	id: ID!
+	description: String
+	partnerId: String
+	productId: String
+	userId: Int
+	type: String
+	when: String
+	partnerId_when: String
+	partnerId_productId: String
+}
+
+input UpdateUserInput {
+	id: ID!
+	name: String
+	userId: String
+	password: String
+	accessCode: String
+	partnerId: String
+	active: String
+	accessCode_partnerId: String
+}
+
+type User {
+	id: ID!
+	name: String!
+	userId: String
+	password: String
+	accessCode: String!
+	partnerId: String!
+	active: String!
+	accessCode_partnerId: String!
+}
+
+type UserConnection {
+	items: [User]
+	nextToken: String
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}

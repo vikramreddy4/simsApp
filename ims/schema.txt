@@ -1,0 +1,86 @@
+ schema {
+     query: Query
+     mutation: Mutation
+ }
+ type Query {
+     singlePartner(id: ID!): Partner
+     getPartners: [Partner]
+     singleUser(id: ID!): User
+     getUsers: [User]
+     singleProduct(id: ID!): Product
+     getProducts: [Product]
+     singleStock(id: ID!): Stock
+     getStocks: [Stock]
+ }
+ type Mutation {
+
+     putPartner(
+      id: ID!,
+      name: String!,
+      active: String!): Partner
+
+     putUser(
+      id: ID!,
+      name: String!,
+      userId: String,
+      password : String,
+      accessCode : String!,
+      partnerId: String!,
+      active: String!,
+      accessCode_partnerId: String!): User
+
+     putProduct(
+      id: ID!,
+      name: String!,
+      description: String!,
+      partnerId: String!,
+      active: String!,
+      quantity: Float!,
+      units: String!,
+      name_partnerId : String!): Product
+
+     putStock(id: ID!,
+      description: String!,
+      productId: String!,
+      userId: Int!,
+      type : String!,
+      partnerId: String!,
+      when: String!,
+      partnerId_when: String!
+      partnerId_productId: String!): Stock
+ }
+ type Partner {
+     id: ID!
+     name: String!
+     active: String!
+ }
+ type User {
+     id: ID!
+     name: String!
+     userId: String
+     password: String
+     accessCode: String!
+     partnerId: String!
+     active: String!
+     accessCode_partnerId: String!
+ }
+ type Product {
+     id: ID!
+     name: String!
+     description: String!
+     active: String!
+     partnerId: String!
+     quantity: Float!
+     units:Float!
+     name_partnerId: String!
+ }
+ type Stock {
+     id: ID!
+     description: String!
+     partnerId: String!
+     productId: String!
+     userId: Int
+     type: String!
+     partnerId_productId:String!
+     when:String!
+ }

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import UserTable from "./UserTable";
+import Table from "./Table";
 import SearchBar from "../SearchBar";
 
-export default class FilterableUserTable extends React.Component {
+export default class FilterableTable extends React.Component {
   constructor(props) {
     super(props);
     // FilterableContactTable is the owner of the state as the filterText is needed in both nodes (searchbar and table) that are below in the hierarchy tree.
@@ -27,7 +27,7 @@ export default class FilterableUserTable extends React.Component {
         <h1>Users</h1>
         Click <Link to={`/user/new`}>here</Link> to create new User.
         <SearchBar filterText={this.state.filterText} onFilterTextInput={this.handleFilterTextInput}/>
-        <UserTable users={this.props.users} filterText={this.state.filterText}/>
+        <Table users={this.props.users} filterText={this.state.filterText}/>
       </div>
     );
   }

@@ -1,13 +1,14 @@
 import React from "react";
-import UserRow from "./UserRow";
-export default class UserTable extends React.Component {
+import Row from "./Row";
+
+export default class Table extends React.Component {
   render() {
     var rows = [];
     this.props.users.forEach((user) => {
       if (user.name.indexOf(this.props.filterText) === -1) {
         return;
       }
-      rows.push(<UserRow user={user} />);
+      rows.push(<Row user={user} />);
     });
     return (
       <table className='table'>

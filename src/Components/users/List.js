@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { graphql, compose } from "react-apollo";
-import FilterableUserTable from "./FilterableUserTable";
+import FilterableTable from "./FilterableTable";
 import QueryAllUsers from "../../GraphQL/QueryAllUsers";
 
-class UsersList extends Component {
+class List extends Component {
     render() {
       const { users } = this.props;
         return (
-          <FilterableUserTable users={users} />
+          <FilterableTable users={users} />
         );
     }
 }
@@ -24,4 +24,4 @@ export default compose(
             })
         }
     )
-)(UsersList);
+)(List);

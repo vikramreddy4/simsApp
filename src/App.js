@@ -13,9 +13,11 @@ import { Rehydrated } from "aws-appsync-react";
 import AllEvents from './Components/AllEvents';
 import NewEvent from './Components/NewEvent';
 import ViewEvent from './Components/ViewEvent';
-import ViewUser from './Components/users/ViewUser';
 import ContactsList from './Components/contacts/ContactsList';
-import UsersList from './Components/users/UsersList';
+
+import ViewUser from './Components/users/View';
+import UsersList from './Components/users/List';
+
 import ViewProduct from './Components/products/View';
 import ProductsList from './Components/products/List';
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default class UserRow extends React.Component {
+export default class Row extends React.Component {
   render() {
     return (
       <tr>

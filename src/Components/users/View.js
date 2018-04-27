@@ -7,7 +7,7 @@ import QueryGetUser from "../../GraphQL/QueryGetUser";
 import MutationCreateUser from "../../GraphQL/MutationCreateUser";
 import MutationUpdateUser from "../../GraphQL/MutationUpdateUser";
 
-class ViewUser extends Component {
+class View extends Component {
 
   constructor() {
     super();
@@ -182,4 +182,4 @@ export default compose (
           })
       }
   )
-)(ViewUser);
+)(View);

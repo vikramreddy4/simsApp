@@ -14,6 +14,7 @@ import AllEvents from './Components/AllEvents';
 import NewEvent from './Components/NewEvent';
 import ViewEvent from './Components/ViewEvent';
 import ContactsList from './Components/contacts/ContactsList';
+import Header from './Components/Header';
 
 import ViewUser from './Components/users/View';
 import UsersList from './Components/users/List';
@@ -21,18 +22,14 @@ import UsersList from './Components/users/List';
 import ViewProduct from './Components/products/View';
 import ProductsList from './Components/products/List';
 
+
+/*
 const Home = () => (
   <div className="ui container">
     <Link to={`/`}>Home</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
     <Link to={`/users`}>Users</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
     <Link to={`/products`}>Products</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
   </div>
-  /*
-  <Link to={`/events`}>Events</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-  <Link to={`/stock`}>Inventory</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-  <Link to={`/newEvent`}>New Event</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-  <Link to={`/contacts`}>Contacts</Link>
-  */
 );
 const EventsList = () => (
   <div className="ui container">
@@ -41,21 +38,23 @@ const EventsList = () => (
     <AllEvents />
   </div>
 );
-
+*/
 const App = () => (
   <Router path="/" component={App}>
     <div>
-      <Route exact={true} path="/" component={Home} />
-      <Route path="/events" component={EventsList} />
+      <Route exact={true} path="/" component={UsersList} />
       <Route path="/users" component={UsersList} />
-      <Route path="/contacts" component={ContactsList} />
       <Route path="/user/:id" component={ViewUser} />
-      <Route path="/event/:id" component={ViewEvent} />
-      <Route path="/newEvent" component={NewEvent} />
       <Route path="/products" component={ProductsList} />
       <Route path="/product/:id" component={ViewProduct} />
     </div>
   </Router>
+  /*
+  <Route path="/events" component={EventsList} />
+  <Route path="/contacts" component={ContactsList} />
+  <Route path="/newEvent" component={NewEvent} />
+  <Route path="/event/:id" component={ViewEvent} />
+  */
 );
 
 const client = new AWSAppSyncClient({

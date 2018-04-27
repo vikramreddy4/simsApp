@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Table from "./Table";
 import SearchBar from "../SearchBar";
+import Header from '../Header';
 
 export default class FilterableTable extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class FilterableTable extends React.Component {
   render() {
     return (
       <div>
+        <Header/>
         <h1>Products</h1>
         Click <Link to={`/product/new`}>here</Link> to create new Product.
         <SearchBar filterText={this.state.filterText} onFilterTextInput={this.handleFilterTextInput}/>

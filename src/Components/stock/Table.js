@@ -4,22 +4,20 @@ import Row from "./Row";
 export default class Table extends React.Component {
   render() {
     var rows = [];
-    this.props.users.forEach((user) => {
-      if (user.name.indexOf(this.props.filterText) === -1) {
+    this.props.stocks.forEach((stock) => {
+      if (stock.description.indexOf(this.props.filterText) === -1) {
         return;
       }
-      rows.push(<Row user={user} />);
+      rows.push(<Row stock={stock}/>);
     });
     return (
       <table className='table'>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Access code</th>
-            <th>Active</th>
-            <th>UserId</th>
+            <th>Description</th>
+            <th>User</th>
+            <th>Type</th>
+            <th>When</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

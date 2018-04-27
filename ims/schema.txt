@@ -63,6 +63,9 @@
      partnerId: String!
      active: String!
      accessCode_partnerId: String!
+     phone: String!
+     email: String!
+     salary: String!
  }
  type Product {
      id: ID!
@@ -73,14 +76,18 @@
      quantity: Float!
      units:Float!
      name_partnerId: String!
+     unitPrice:Float!
  }
  type Stock {
      id: ID!
      description: String!
-     partnerId: String!
+     partnerId: String
      productId: String!
      userId: Int
      type: String!
-     partnerId_productId:String!
-     when:String!
+     quantity:Float!
+     when:String
+     updateDate:String
+     partnerId_when:String
+     partnerId_productId:String
  }

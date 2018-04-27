@@ -8,34 +8,34 @@ input CreateProductInput {
 	id: ID!
 	name: String!
 	description: String!
-	active: String!
-	partnerId: String!
-	quantity: Float!
-	units: Float!
-	name_partnerId: String!
+	active: Boolean!
+	partnerId: String
+	quantity: Float
+	units: String!
+	name_partnerId: String
 }
 
 input CreateStockInput {
 	id: ID!
 	description: String!
-	partnerId: String!
+	partnerId: String
 	productId: String!
 	userId: Int
 	type: String!
-	when: String!
-	partnerId_when: String!
-	partnerId_productId: String!
+	when: String
+	partnerId_when: String
+	partnerId_productId: String
 }
 
 input CreateUserInput {
 	id: ID!
 	name: String!
-	userId: String
+	userId: String!
 	password: String
 	accessCode: String!
-	partnerId: String!
-	active: String!
-	accessCode_partnerId: String!
+	partnerId: String
+	active: Boolean!
+	accessCode_partnerId: String
 }
 
 input DeletePartnerInput {
@@ -59,12 +59,12 @@ type Mutation {
 	putUser(
 		id: ID!,
 		name: String!,
-		userId: String,
+		userId: String!,
 		password: String,
 		accessCode: String!,
-		partnerId: String!,
-		active: String!,
-		accessCode_partnerId: String!
+		partnerId: String,
+		active: Boolean!,
+		accessCode_partnerId: String
 	): User
 	putProduct(
 		id: ID!,
@@ -76,17 +76,6 @@ type Mutation {
 		units: String!,
 		name_partnerId: String!
 	): Product
-	putStock(
-		id: ID!,
-		description: String!,
-		productId: String!,
-		userId: Int!,
-		type: String!,
-		partnerId: String!,
-		when: String!,
-		partnerId_when: String!,
-		partnerId_productId: String!
-	): Stock
 	createPartner(input: CreatePartnerInput!): Partner
 	updatePartner(input: UpdatePartnerInput!): Partner
 	deletePartner(input: DeletePartnerInput!): Partner
@@ -116,11 +105,11 @@ type Product {
 	id: ID!
 	name: String!
 	description: String!
-	active: String!
-	partnerId: String!
-	quantity: Float!
-	units: Float!
-	name_partnerId: String!
+	active: Boolean!
+	partnerId: String
+	quantity: Float
+	units: String!
+	name_partnerId: String
 }
 
 type ProductConnection {
@@ -149,21 +138,19 @@ type Query {
 	queryUsersByAccessCodePartnerIdIndex(accessCode_partnerId: String!, first: Int, after: String): UserConnection
 	getStock(id: ID!): Stock
 	listStocks(first: Int, after: String): StockConnection
-	queryStocksByPartnerIdIndex(partnerId: String!, first: Int, after: String): StockConnection
-	queryStocksByPartnerIdWhenIndex(partnerId_when: String!, first: Int, after: String): StockConnection
-	queryStocksByPartnerIdProductIdIndex(partnerId_productId: String!, first: Int, after: String): StockConnection
+	queryStocksByProductIdIndex(productId: String!, first: Int, after: String): StockConnection
 }
 
 type Stock {
 	id: ID!
 	description: String!
-	partnerId: String!
+	partnerId: String
 	productId: String!
 	userId: Int
 	type: String!
-	when: String!
-	partnerId_when: String!
-	partnerId_productId: String!
+	when: String
+	partnerId_when: String
+	partnerId_productId: String
 }
 
 type StockConnection {
@@ -182,7 +169,7 @@ type Subscription {
 		id: ID,
 		name: String,
 		description: String,
-		active: String,
+		active: Boolean,
 		partnerId: String
 	): Product
 		@aws_subscribe(mutations: ["createProduct"])
@@ -190,7 +177,7 @@ type Subscription {
 		id: ID,
 		name: String,
 		description: String,
-		active: String,
+		active: Boolean,
 		partnerId: String
 	): Product
 		@aws_subscribe(mutations: ["updateProduct"])
@@ -198,7 +185,7 @@ type Subscription {
 		id: ID,
 		name: String,
 		description: String,
-		active: String,
+		active: Boolean,
 		partnerId: String
 	): Product
 		@aws_subscribe(mutations: ["deleteProduct"])
@@ -262,10 +249,10 @@ input UpdateProductInput {
 	id: ID!
 	name: String
 	description: String
-	active: String
+	active: Boolean
 	partnerId: String
 	quantity: Float
-	units: Float
+	units: String
 	name_partnerId: String
 }
 
@@ -288,19 +275,19 @@ input UpdateUserInput {
 	password: String
 	accessCode: String
 	partnerId: String
-	active: String
+	active: Boolean
 	accessCode_partnerId: String
 }
 
 type User {
 	id: ID!
 	name: String!
-	userId: String
+	userId: String!
 	password: String
 	accessCode: String!
-	partnerId: String!
-	active: String!
-	accessCode_partnerId: String!
+	partnerId: String
+	active: Boolean!
+	accessCode_partnerId: String
 }
 
 type UserConnection {

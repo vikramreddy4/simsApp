@@ -22,6 +22,8 @@ import UsersList from './Components/users/List';
 import ViewProduct from './Components/products/View';
 import ProductsList from './Components/products/List';
 
+import ViewStock from './Components/stock/View';
+import StocksList from './Components/stock/List';
 
 /*
 const Home = () => (
@@ -47,6 +49,8 @@ const App = () => (
       <Route path="/user/:id" component={ViewUser} />
       <Route path="/products" component={ProductsList} />
       <Route path="/product/:id" component={ViewProduct} />
+      <Route path="/stocks/:productId" component={StocksList} />
+      <Route path="/stock/:productId/:stockId" component={ViewStock} />
     </div>
   </Router>
   /*

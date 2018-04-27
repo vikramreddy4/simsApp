@@ -6,7 +6,7 @@ query GetPartner {
 	}
 }
 mutation PutPartner {
-	putPartner(id: 1, name: "Partner1", active:"Y") {
+	putPartner(id: "zcsadsc", name: "Partner1", active:"Y") {
 		 id
 		 name
 		 active
@@ -18,6 +18,7 @@ query listUsers {
 		items {
       id
       name
+      active
     }
   }
 }
@@ -33,7 +34,7 @@ query GetUser {
 	}
 }
 query queryUsersByUserIdIndex {
-	queryUsersByUserIdIndex(userId: "userId1") {
+	queryUsersByAccessCodePartnerIdIndex(accessCode_partnerId: "userId1") {
 	items {
    		 id
 		 name
@@ -46,8 +47,8 @@ query queryUsersByUserIdIndex {
   }
   }
 }
-mutation PutProduct {
-	putProduct(id: "1", name:"Product1", description: "Product dexcription 1", partnerId:1, active:"Y", quantity: 7.0, units: "Grams") {
+mutation CreateProduct {
+	createProduct(input:{id: "1", name:"Product1", description: "Product dexcription 1", partnerId:"1", active:true, quantity: 7.0, units: "Grams",name_partnerId:"xxx"}) {
 		id
     name
 		description
@@ -58,25 +59,28 @@ mutation PutProduct {
 	}
 }
 mutation PutUser {
-	putUser(id: "xxx1", name: "User1-1", userId: "userId1-1", accessCode: "6789-1") {
+	putUser(id: "xxx1", active:true,name: "User1-1", userId: "userId1-1", accessCode: "6789-1",partnerId:"1",accessCode_partnerId:"1") {
 		 id
 		 name
 		 userId
 		 accessCode
+    active
 	}
 }
-mutation createUser {
-	createUser(name: "User1244-2", userId: "userI1d1-2", accessCode: "678-2") {
-		 name
-		 userId
-		 accessCode
+mutation CreateStock {
+	createStock(input:{id: "2", description: "Product dexcription 1", productId:"6be417ab-0573-444b-a363-f763ed99835b", type:"Issue"}) {
+		id
+		description
+		partnerId
+    userId
+    productId
 	}
 }
-mutation updateUser {
-	updateUser(input:{id: "xxx121", name: "User1244-1", userId: "userI1d1-1", accessCode: "678-1"}) {
-		 id
-		 name
-		 userId
-		 accessCode
+query QueryStocksByProductIdIndex {
+	queryStocksByProductIdIndex(productId:"6be417ab-0573-444b-a363-f763ed99835b") {
+    items {
+			      id
+      description
+    }
 	}
 }

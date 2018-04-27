@@ -16,7 +16,6 @@ export default class Table extends React.Component {
             <th>Name</th>
             <th>Active</th>
             <th>Quantity</th>
-            <th>Units</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

@@ -9,6 +9,9 @@ query {
       accessCode
       active
       userId
+      phone
+      email
+      salary
     }
   }
 }`);

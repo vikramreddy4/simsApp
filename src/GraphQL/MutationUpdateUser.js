@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export default gql(`
-mutation($id: ID! $name: String $accessCode: String $userId: String $active: Boolean) {
+mutation($id: ID! $name: String $accessCode: String $userId: String $active: Boolean $phone: String $email: String $salary: String) {
   updateUser(input:
     {
       id: $id
@@ -9,6 +9,9 @@ mutation($id: ID! $name: String $accessCode: String $userId: String $active: Boo
       accessCode: $accessCode
       userId: $userId
       active: $active
+      phone: $phone
+      email: $email
+      salary: $salary
     }
   ) {
     id
@@ -16,5 +19,8 @@ mutation($id: ID! $name: String $accessCode: String $userId: String $active: Boo
     accessCode
     userId
     active
+    phone
+    email
+    salary
   }
 }`);

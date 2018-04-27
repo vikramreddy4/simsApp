@@ -15,30 +15,32 @@ class View extends Component {
       user: {
         id:'',
         name: '',
+        phone:'',
+        salary:'',
+        email:'',
         accessCode: '',
         userId: '',
         active:true,
       },
       errors: {
         name: true,
-        accessCode: true,
-        userId: true,
+        phone: true,
+        email: true,
       }
     };
   };
 
   static defaultProps = {
-      putUser: () => null,
       createUser: () => null,
       updateUser: () => null,
   }
 
-  validateInputs(name, accessCode, userId) {
+  validateInputs(name, phone, email) {
     // true means invalid, so our conditions got reversed
     return {
       name: name.length === 0,
-      accessCode: accessCode.length === 0,
-      userId: userId.length === 0,
+      phone: phone.length === 0,
+      email: email.length === 0,
     };
   }
 
@@ -57,20 +59,14 @@ class View extends Component {
         console.log(user);
         await updateUser(user);
       }
-
       history.push('/users');
   }
 
   handleChange(field, event) {
-      console.log(event.target.type);
       const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-      console.log(value);
-      console.log(this.state.user.name);
       const { user } = this.state;
-      console.log(user);
       user[field] = value;
       this.setState({ user });
-      console.log(this.state.user.name);
   }
 
   componentDidMount() {
@@ -81,6 +77,10 @@ class View extends Component {
       user.name = this.props.user.name;
       user.accessCode = this.props.user.accessCode;
       user.userId = this.props.user.userId;
+      user.phone = this.props.user.phone;
+      user.email = this.props.user.email;
+      user.salary = this.props.user.salary;
+      user.active = this.props.user.active;
       console.log(user);
       this.setState({user:user});
       console.log('properties were set : ');
@@ -93,7 +93,7 @@ class View extends Component {
 
     render() {
         const { user, loading } = this.props;
-        const errors = this.validateInputs(this.state.user.name, this.state.user.accessCode, this.state.user.userId);
+        const errors = this.validateInputs(this.state.user.name, this.state.user.phone, this.state.user.email);
         const isEnabled = !Object.keys(errors).some(x => errors[x]);
         var title = "Create User";
         if(user) {
@@ -110,16 +110,28 @@ class View extends Component {
                   <input type="text" id="name" value={this.state.user.name} onChange={this.handleChange.bind(this,'name')}/>
               </div>
               <div className="field required eight wide">
+                  <label htmlFor="name">Phone</label>
+                  <input type="text" id="phone" value={this.state.user.phone} onChange={this.handleChange.bind(this,'phone')}/>
+              </div>
+              <div className="field required eight wide">
+                  <label htmlFor="name">Email</label>
+                  <input type="text" id="email" value={this.state.user.email} onChange={this.handleChange.bind(this,'email')}/>
+              </div>
+              <div className="field eight wide">
                   <label htmlFor="accessCode">Access code</label>
                   <input type="text" id="accessCode" value={this.state.user.accessCode} onChange={this.handleChange.bind(this,'accessCode')}/>
               </div>
-              <div className="field required eight wide">
+              <div className="field eight wide">
                   <label htmlFor="userId">User Id</label>
                   <input type="text" id="userId" value={this.state.user.userId} onChange={this.handleChange.bind(this,'userId')}/>
               </div>
               <div className="field required eight wide">
                   <label htmlFor="active">Active</label>
                   <input type="checkbox" id="active" checked={this.state.user.active} onChange={this.handleChange.bind(this,'active')}/>
+              </div>
+              <div className="field eight wide">
+                  <label htmlFor="name">Monthly Salary</label>
+                  <input type="text" id="salary" value={this.state.user.salary} onChange={this.handleChange.bind(this,'salary')}/>
               </div>
               <input type="hidden" id="id" value={this.props.match.params.id}/>
           </div>

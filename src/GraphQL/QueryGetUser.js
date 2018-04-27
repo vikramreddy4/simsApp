@@ -8,5 +8,8 @@ query($id: ID!) {
     accessCode
     userId
     active
+    phone
+    email
+    salary
   }
 }`);

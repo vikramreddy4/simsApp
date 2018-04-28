@@ -5,10 +5,12 @@ query {
   listProducts {
     items {
       id
+      description
       name
       quantity
       active
       units
+      unitPrice
     }
   }
 }`);

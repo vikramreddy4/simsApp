@@ -6,6 +6,7 @@ export default class Row extends React.Component {
     return (
       <tr>
         <td><Link to={`/product/${this.props.product.id}`}>{this.props.product.name}</Link></td>
+        <td>{this.props.product.description}</td>
         <td>{JSON.stringify(this.props.product.active)}</td>
         <td>
             <Link to={`/stocks/${this.props.product.id}`}>{this.props.product.quantity}</Link>
@@ -15,6 +16,7 @@ export default class Row extends React.Component {
             &nbsp;
             ( <Link to={`/stock/${this.props.product.id}/new`}>Adjust</Link> )
         </td>
+        <td>{this.props.product.unitPrice}</td>
       </tr>
     );
   }

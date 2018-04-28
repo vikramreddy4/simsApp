@@ -19,6 +19,7 @@ class View extends Component {
         units: '',
         active:true,
         quantity:0,
+        unitPrice:0,
       },
       errors: {
         name: true,
@@ -116,6 +117,10 @@ class View extends Component {
               <div className="field required eight wide">
                   <label htmlFor="units">Units</label>
                   <input type="text" id="units" value={this.state.product.units} onChange={this.handleChange.bind(this,'units')}/>
+              </div>
+              <div className="field required eight wide">
+                  <label htmlFor="units">Unit price</label>
+                  <input type="text" id="unitPrice" value={this.state.product.unitPrice} onChange={this.handleChange.bind(this,'unitPrice')}/>
               </div>
               <div className="field required eight wide">
                   <label htmlFor="active">Active</label>

@@ -14,8 +14,10 @@ export default class Table extends React.Component {
         <thead>
           <tr>
             <th>Name</th>
+            <th>Description</th>
             <th>Active</th>
             <th>Quantity</th>
+            <th>Price per unit</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

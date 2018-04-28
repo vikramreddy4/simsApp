@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export default gql(`
-mutation($id: ID! $name: String! $description: String! $units: String! $active: Boolean!) {
+mutation($id: ID! $name: String! $description: String! $units: String! $active: Boolean! $unitPrice: Float!) {
   createProduct(input:
     {
       id: $id
@@ -9,6 +9,7 @@ mutation($id: ID! $name: String! $description: String! $units: String! $active: 
       description: $description
       units: $units
       active: $active
+      unitPrice: $unitPrice
     }
   ) {
     id
@@ -16,5 +17,6 @@ mutation($id: ID! $name: String! $description: String! $units: String! $active: 
     description
     units
     active
+    unitPrice
   }
 }`);

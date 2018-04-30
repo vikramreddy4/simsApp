@@ -5,8 +5,8 @@ import { v4 as uuid } from "uuid";
 
 import QueryGetProduct from "../../GraphQL/QueryGetProduct";
 import QueryGetStock from "../../GraphQL/QueryGetStock";
-import MutationCreateProduct from "../../GraphQL/MutationCreateProduct";
-import MutationUpdateProduct from "../../GraphQL/MutationUpdateProduct";
+import MutationCreateStock from "../../GraphQL/MutationCreateStock";
+import MutationUpdateStock from "../../GraphQL/MutationUpdateStock";
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -71,6 +71,7 @@ class View extends Component {
       const { createStock, updateStock, history } = this.props;
       if(this.props.match.params.id === 'new') {
         this.state.stock.id = uuid();
+        this.state.stock.productId = this.props.match.params.productId;
         const { stock } = this.state;
         console.log(stock);
         await createStock(stock);
@@ -80,16 +81,25 @@ class View extends Component {
         console.log(stock);
         await updateStock(stock);
       }
-
-      history.push('/stocks');
+      history.push('/products');
   }
 
   handleChange(field, event) {
-      console.log(event.target.type);
-      const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-      const { stock } = this.state;
+    console.log(event.target.type);
+    const { stock } = this.state;
+    if(event.target.type === 'number') {
+      var parsed = Number.parseInt(event.target.value, 0);
+      if (Number.isNaN(parsed)) {
+        return 0;
+      }
+      const value = parsed;
       console.log(stock);
       stock[field] = value;
+    }else {
+      const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+      console.log(stock);
+      stock[field] = value;
+    }
       this.setState({ stock });
       console.log(stock);
   }
@@ -99,10 +109,13 @@ class View extends Component {
     if(this.props.stock) {
       var {stock} = this.state;
       console.log(stock);
+      stock.id = this.props.stock.id;
       stock.type = this.props.stock.type;
       stock.reason = this.props.stock.reason;
       stock.description = this.props.stock.description;
       stock.quantity = this.props.stock.quantity;
+      stock.when = this.props.stock.when;
+      stock.productId = this.props.stock.productId;
       console.log(stock);
       this.setState({stock:stock});
       console.log('properties were set : ');
@@ -117,10 +130,30 @@ class View extends Component {
         const { product, stock, loading } = this.props;
         const errors = this.validateInputs(this.state.stock.quantity, this.state.stock.description, this.state.stock.reason);
         const isEnabled = !Object.keys(errors).some(x => errors[x]);
+        var updateMode = false;
         var title = "New Stock entry";
         if(stock) {
+          updateMode = true;
           title = "Update Stock entry";
         }
+        const typeField = updateMode ? (
+             <div>{this.props.stock.type}</div>
+           ) : (
+             <select id="type" onChange={this.handleChange.bind(this,'type')}>
+               <option value='Issue'>Issue</option>
+               <option value='Receipt'>Receipt</option>
+             </select>
+           );
+        const reasonField = updateMode ? (
+             <div>{this.props.stock.reason}</div>
+           ) : (
+             <select id="reason" onChange={this.handleChange.bind(this,'reason')}>
+               <option value='Used for customer service'>Used for customer service</option>
+               <option value='Stock adjustment'>Stock adjustment</option>
+               <option value='Product purchased'>Product purchased</option>
+             </select>
+           );
+
         return (
           <div className="ui container raised very padded segment">
           <div className="ui form">
@@ -151,23 +184,17 @@ class View extends Component {
               </div>
               <div className="field required eight wide">
                   <label htmlFor="type">Type</label>
-                  <select id="type" value='${this.state.stock.type}' onChange={this.handleChange.bind(this,'type')}>
-                    <option value='Issue'>Issue</option>
-                    <option value='Receipt'>Receipt</option>
-                  </select>
+                  {reasonField}
               </div>
               <div className="field required eight wide">
                   <label htmlFor="reason">Reason</label>
-                  <select id="reason" value='${this.state.stock.reason}' onChange={this.handleChange.bind(this,'reason')}>
-                    <option value='Used for customer service'>Used for customer service</option>
-                    <option value='Stock adjustment'>Stock adjustment</option>
-                    <option value='Product purchased'>Product purchased</option>
-                  </select>
+                  {reasonField}
               </div>
               <div className="field eight wide">
                   <label>Quantity</label>
-                  <input type="text" id="quantity" value={this.state.stock.quantity} onChange={this.handleChange.bind(this,'quantity')}/>
+                  <input type="number" id="quantity" value={this.state.stock.quantity} onChange={this.handleChange.bind(this,'quantity')}/>
               </div>
+              <input type="hidden" id="productId" value={this.props.match.params.productId}/>
               <input type="hidden" id="id" value={this.props.match.params.id}/>
           </div>
           <br/>
@@ -195,10 +222,9 @@ export default compose (
           }),
       }
   )
-/*
   ,
   graphql(
-      QueryGetStock,
+      QueryGetProduct,
       {
           options: ({ match: { params: { productId } } }) => ({
               variables: { productId },
@@ -209,6 +235,39 @@ export default compose (
               loading,
           }),
       }
+  ),
+  graphql(
+        MutationCreateStock,
+      {
+          props: (props) => ({
+              createStock: (stock) => {
+                  return props.mutate({
+                      variables: {...stock},
+                      optimisticResponse: () => ({
+                          createStock: {
+                              ...stock, __typename: 'Stock'
+                          }
+                      }),
+                  })
+              }
+          })
+      }
+  ),
+  graphql(
+        MutationUpdateStock,
+      {
+          props: (props) => ({
+              updateStock: (stock) => {
+                  return props.mutate({
+                      variables: {...stock},
+                      optimisticResponse: () => ({
+                          updateStock: {
+                              ...stock, __typename: 'Stock'
+                          }
+                      }),
+                  })
+              }
+          })
+      }
   )
-  */
 )(View);

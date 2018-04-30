@@ -93,6 +93,7 @@ class View extends Component {
 
     render() {
         const { user, loading } = this.props;
+        console.log('loading - '+loading);
         const errors = this.validateInputs(this.state.user.name, this.state.user.phone, this.state.user.email);
         const isEnabled = !Object.keys(errors).some(x => errors[x]);
         var title = "Create User";

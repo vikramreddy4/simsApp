@@ -50,7 +50,7 @@ const App = () => (
       <Route path="/products" component={ProductsList} />
       <Route path="/product/:id" component={ViewProduct} />
       <Route path="/stocks/:productId" component={StocksList} />
-      <Route path="/stock/:id" component={ViewStock} />
+      <Route path="/stock/:productId/:id" component={ViewStock} />
       <Route path="/events" component={EventsList} />
       <Route path="/contacts" component={ContactsList} />
       <Route path="/newEvent" component={NewEvent} />

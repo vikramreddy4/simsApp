@@ -8,7 +8,7 @@ export default class Table extends React.Component {
       if (user.name.indexOf(this.props.filterText) === -1) {
         return;
       }
-      rows.push(<Row user={user} />);
+      rows.push(<Row user={user} key={user.id}/>);
     });
     return (
       <table className='table'>

@@ -12,7 +12,6 @@ var CONTACTS = [
 
 
 export default class ContactsList extends Component {
-
     render() {
         return (
           <FilterableContactTable contacts={CONTACTS} />

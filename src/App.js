@@ -26,6 +26,7 @@ import ViewStock from './Components/stock/View';
 import StocksList from './Components/stock/List';
 
 /*
+*/
 const Home = () => (
   <div className="ui container">
     <Link to={`/`}>Home</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -40,7 +41,6 @@ const EventsList = () => (
     <AllEvents />
   </div>
 );
-*/
 const App = () => (
   <Router path="/" component={App}>
     <div>
@@ -50,14 +50,14 @@ const App = () => (
       <Route path="/products" component={ProductsList} />
       <Route path="/product/:id" component={ViewProduct} />
       <Route path="/stocks/:productId" component={StocksList} />
-      <Route path="/stock/:productId/:stockId" component={ViewStock} />
+      <Route path="/stock/:id" component={ViewStock} />
+      <Route path="/events" component={EventsList} />
+      <Route path="/contacts" component={ContactsList} />
+      <Route path="/newEvent" component={NewEvent} />
+      <Route path="/event/:id" component={ViewEvent} />
     </div>
   </Router>
   /*
-  <Route path="/events" component={EventsList} />
-  <Route path="/contacts" component={ContactsList} />
-  <Route path="/newEvent" component={NewEvent} />
-  <Route path="/event/:id" component={ViewEvent} />
   */
 );
 

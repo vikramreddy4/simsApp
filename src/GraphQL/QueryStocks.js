@@ -13,6 +13,8 @@ query($productId: String!) {
     	when
     	partnerId_when
     	partnerId_productId
+      quantity
+      reason
     }
   }
 }`);

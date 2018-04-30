@@ -86,6 +86,7 @@
      userId: Int
      type: String!
      quantity:Float!
+     reason:String
      when:String
      updateDate:String
      partnerId_when:String

@@ -7,6 +7,9 @@ import QueryGetProduct from "../../GraphQL/QueryGetProduct";
 import QueryGetStock from "../../GraphQL/QueryGetStock";
 import MutationCreateStock from "../../GraphQL/MutationCreateStock";
 import MutationUpdateStock from "../../GraphQL/MutationUpdateStock";
+/*
+import ProductFragment from "../products/Fragment";
+*/
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -160,6 +163,7 @@ class View extends Component {
               <h1 className="ui header">{title}</h1>
               <div>Fields marked * are mandatory.</div>
               <br/>
+              Product Name : {product && product.name}
               <div className="field required eight wide">
                   <label htmlFor="description">Description</label>
                   <input type="text" id="description" value={this.state.stock.description} onChange={this.handleChange.bind(this,'description')}/>
@@ -210,6 +214,19 @@ class View extends Component {
 
 export default compose (
   graphql(
+      QueryGetProduct,
+      {
+          options: ({ match: { params: { productId } } }) => ({
+              variables: { id: productId },
+              fetchPolicy: 'cache-and-network',
+          }),
+          props: ({ data: { getProduct: product, loading} }) => ({
+              product,
+              loading,
+          }),
+      }
+  ),
+  graphql(
       QueryGetStock,
       {
           options: ({ match: { params: { id } } }) => ({
@@ -223,19 +240,6 @@ export default compose (
       }
   )
   ,
-  graphql(
-      QueryGetProduct,
-      {
-          options: ({ match: { params: { productId } } }) => ({
-              variables: { productId },
-              fetchPolicy: 'cache-and-network',
-          }),
-          props: ({ data: { getStock: product, loading} }) => ({
-              product,
-              loading,
-          }),
-      }
-  ),
   graphql(
         MutationCreateStock,
       {

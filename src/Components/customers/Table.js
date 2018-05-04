@@ -19,6 +19,7 @@ export default class Table extends React.Component {
             <th>Name</th>
             <th>Phone</th>
             <th>Email</th>
+            <th>Orders</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

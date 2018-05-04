@@ -8,6 +8,7 @@ query($id: ID!) {
     description
     quantity
     units
+    unitPrice
     active
   }
 }`);

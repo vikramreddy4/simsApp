@@ -7,7 +7,7 @@ import QueryGetProduct from "../../GraphQL/QueryGetProduct";
 import MutationCreateProduct from "../../GraphQL/MutationCreateProduct";
 import MutationUpdateProduct from "../../GraphQL/MutationUpdateProduct";
 
-class View extends Component {
+class Fragment extends Component {
 
   constructor(props) {
     super(props);
@@ -29,48 +29,6 @@ class View extends Component {
       loading: true,
     };
   };
-
-  static defaultProps = {
-      createProduct: () => null,
-      updateProduct: () => null,
-  }
-
-  validateInputs(name, description, units) {
-    // true means invalid, so our conditions got reversed
-    return {
-      name: name.length === 0,
-      description: description.length === 0,
-      units: units.length === 0,
-    };
-  }
-
-  handleSave = async (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      const { createProduct, updateProduct, history } = this.props;
-      if(this.props.match.params.id === 'new') {
-        this.state.product.id = uuid();
-        const { product } = this.state;
-        console.log(product);
-        await createProduct(product);
-      }else {
-        this.state.product.id = this.props.match.params.id;
-        const { product } = this.state;
-        console.log(product);
-        await updateProduct(product);
-      }
-
-      history.push('/products');
-  }
-
-  handleChange(field, event) {
-      const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-      const { product } = this.state;
-      console.log(product);
-      product[field] = value;
-      this.setState({ product });
-      console.log(this.state.product.name);
-  }
 
   componentDidMount() {
     console.log('setting properties');
@@ -95,12 +53,6 @@ class View extends Component {
 
     render() {
         const { product, loading } = this.props;
-        const errors = this.validateInputs(this.state.product.name, this.state.product.description, this.state.product.units);
-        const isEnabled = !Object.keys(errors).some(x => errors[x]);
-        var title = "Create Product";
-        if(product) {
-          title = "Update Product";
-        }
         console.log('Render id - '+this.props.match.params.id);
         console.log('Render product - '+product);
       if (this.props.match.params.id !== 'new' && product === 'undefined') {
@@ -109,9 +61,6 @@ class View extends Component {
         return (
           <div className="ui container raised very padded segment">
             <div className="ui form">
-                <h1 className="ui header">{title}</h1>
-                <div>Fields marked * are mandatory.</div>
-                <br/>
                 {
                   product &&
                   <div className="field required eight wide">
@@ -142,13 +91,6 @@ class View extends Component {
                 }
                   {
                     product &&
-                  <div className="field required eight wide">
-                      <label htmlFor="active">Active</label>
-                      <input type="checkbox" id="active" checked={this.state.product.active} onChange={this.handleChange.bind(this,'active')}/>
-                  </div>
-                }
-                  {
-                    product &&
                   <div className="field eight wide">
                       <label>Quantity</label>
                       {this.state.product.quantity}
@@ -156,12 +98,6 @@ class View extends Component {
                 }
           <input type="hidden" id="id" value={this.props.match.params.id}/>
         </div>
-          <br/>
-          <div className="ui buttons">
-              <Link to="/products" className="ui button">Cancel</Link>
-              <div className="or"></div>
-              <button disabled={!isEnabled} className="ui positive button" onClick={this.handleSave}>Save</button>
-          </div>
       </div>
         );
       }
@@ -181,39 +117,4 @@ export default compose (
               loading,
           }),
       }
-  ),
-  graphql(
-        MutationCreateProduct,
-      {
-          props: (props) => ({
-              createProduct: (product) => {
-                  return props.mutate({
-                      variables: {...product},
-                      optimisticResponse: () => ({
-                          createProduct: {
-                              ...product, __typename: 'Product'
-                          }
-                      }),
-                  })
-              }
-          })
-      }
-  ),
-  graphql(
-        MutationUpdateProduct,
-      {
-          props: (props) => ({
-              updateProduct: (product) => {
-                  return props.mutate({
-                      variables: {...product},
-                      optimisticResponse: () => ({
-                          updateProduct: {
-                              ...product, __typename: 'Product'
-                          }
-                      }),
-                  })
-              }
-          })
-      }
-  )
-)(View);
+  ))(Fragment);

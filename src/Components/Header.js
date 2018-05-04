@@ -6,8 +6,9 @@ export default class Header extends React.Component {
     return (
       <div className="ui container">
         <Link to={`/`}>Home</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-        <Link to={`/users`}>Users</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <Link to={`/users`}>Employees</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
         <Link to={`/products`}>Products</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <Link to={`/customers`}>Customers</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
       </div>
       /*
       <Link to={`/events`}>Events</Link>&nbsp;&nbsp;|&nbsp;&nbsp;

@@ -1,3 +1,12 @@
+input CreateCustomerInput {
+	id: ID!
+	name: String!
+	partnerId: String
+	active: Boolean
+	phone: String!
+	email: String!
+}
+
 input CreatePartnerInput {
 	id: ID!
 	name: String!
@@ -13,6 +22,7 @@ input CreateProductInput {
 	quantity: Float
 	units: String!
 	name_partnerId: String
+	unitPrice: Float!
 }
 
 input CreateStockInput {
@@ -25,17 +35,40 @@ input CreateStockInput {
 	when: String
 	partnerId_when: String
 	partnerId_productId: String
+	quantity: Float!
+	reason: String
 }
 
 input CreateUserInput {
 	id: ID!
 	name: String!
-	userId: String!
+	userId: String
 	password: String
-	accessCode: String!
+	accessCode: String
 	partnerId: String
 	active: Boolean!
 	accessCode_partnerId: String
+	phone: String!
+	email: String!
+	salary: String
+}
+
+type Customer {
+	id: ID!
+	name: String!
+	partnerId: String
+	active: Boolean
+	phone: String!
+	email: String!
+}
+
+type CustomerConnection {
+	items: [Customer]
+	nextToken: String
+}
+
+input DeleteCustomerInput {
+	id: ID!
 }
 
 input DeletePartnerInput {
@@ -88,6 +121,19 @@ type Mutation {
 	createStock(input: CreateStockInput!): Stock
 	updateStock(input: UpdateStockInput!): Stock
 	deleteStock(input: DeleteStockInput!): Stock
+	createCustomer(input: CreateCustomerInput!): Customer
+	updateCustomer(input: UpdateCustomerInput!): Customer
+	deleteCustomer(input: DeleteCustomerInput!): Customer
+}
+
+type Order {
+	id: ID!
+	customerId: String!
+	partnerId: String!
+	services: String!
+	when: String!
+	cost: Int!
+	discount: Int!
 }
 
 type Partner {
@@ -110,6 +156,7 @@ type Product {
 	quantity: Float
 	units: String!
 	name_partnerId: String
+	unitPrice: Float
 }
 
 type ProductConnection {
@@ -139,6 +186,10 @@ type Query {
 	getStock(id: ID!): Stock
 	listStocks(first: Int, after: String): StockConnection
 	queryStocksByProductIdIndex(productId: String!, first: Int, after: String): StockConnection
+	getCustomer(id: ID!): Customer
+	listCustomers(first: Int, after: String): CustomerConnection
+	queryCustomersByEmailIndex(email: String!, first: Int, after: String): CustomerConnection
+	queryCustomersByPhoneIndex(phone: String!, first: Int, after: String): CustomerConnection
 }
 
 type Stock {
@@ -151,6 +202,8 @@ type Stock {
 	when: String
 	partnerId_when: String
 	partnerId_productId: String
+	quantity: Float!
+	reason: String
 }
 
 type StockConnection {
@@ -237,6 +290,39 @@ type Subscription {
 		userId: Int
 	): Stock
 		@aws_subscribe(mutations: ["deleteStock"])
+	onCreateCustomer(
+		id: ID,
+		name: String,
+		partnerId: String,
+		active: String,
+		phone: String
+	): Customer
+		@aws_subscribe(mutations: ["createCustomer"])
+	onUpdateCustomer(
+		id: ID,
+		name: String,
+		partnerId: String,
+		active: String,
+		phone: String
+	): Customer
+		@aws_subscribe(mutations: ["updateCustomer"])
+	onDeleteCustomer(
+		id: ID,
+		name: String,
+		partnerId: String,
+		active: String,
+		phone: String
+	): Customer
+		@aws_subscribe(mutations: ["deleteCustomer"])
+}
+
+input UpdateCustomerInput {
+	id: ID!
+	name: String
+	partnerId: String
+	active: Boolean
+	phone: String
+	email: String
 }
 
 input UpdatePartnerInput {
@@ -254,6 +340,7 @@ input UpdateProductInput {
 	quantity: Float
 	units: String
 	name_partnerId: String
+	unitPrice: Float!
 }
 
 input UpdateStockInput {
@@ -266,6 +353,8 @@ input UpdateStockInput {
 	when: String
 	partnerId_when: String
 	partnerId_productId: String
+	quantity: Float
+	reason: String
 }
 
 input UpdateUserInput {
@@ -277,6 +366,9 @@ input UpdateUserInput {
 	partnerId: String
 	active: Boolean
 	accessCode_partnerId: String
+	phone: String
+	email: String
+	salary: String
 }
 
 type User {
@@ -288,6 +380,9 @@ type User {
 	partnerId: String
 	active: Boolean!
 	accessCode_partnerId: String
+	phone: String
+	email: String
+	salary: String
 }
 
 type UserConnection {

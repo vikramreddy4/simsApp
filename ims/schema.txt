@@ -67,6 +67,23 @@
      email: String!
      salary: String!
  }
+ type Customer {
+     id: ID!
+     name: String!
+     partnerId: String
+     active: Boolean
+     phone: String!
+     email: String!
+}
+type CustomerOrder {
+    id: ID!
+    customerId: String!
+    partnerId: String
+    services: String!
+    when:String!
+    finalCost:Int!
+    discount:Int!
+}
  type Product {
      id: ID!
      name: String!

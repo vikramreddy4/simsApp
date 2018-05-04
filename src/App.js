@@ -25,6 +25,9 @@ import ProductsList from './Components/products/List';
 import ViewStock from './Components/stock/View';
 import StocksList from './Components/stock/List';
 
+import ViewCustomer from './Components/customers/View';
+import CustomersList from './Components/customers/List';
+
 /*
 */
 const Home = () => (
@@ -32,6 +35,7 @@ const Home = () => (
     <Link to={`/`}>Home</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
     <Link to={`/users`}>Users</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
     <Link to={`/products`}>Products</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
+    <Link to={`/customers`}>Customers</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
   </div>
 );
 const EventsList = () => (
@@ -47,6 +51,8 @@ const App = () => (
       <Route exact={true} path="/" component={UsersList} />
       <Route path="/users" component={UsersList} />
       <Route path="/user/:id" component={ViewUser} />
+      <Route path="/customers" component={CustomersList} />
+      <Route path="/customer/:id" component={ViewCustomer} />
       <Route path="/products" component={ProductsList} />
       <Route path="/product/:id" component={ViewProduct} />
       <Route path="/stocks/:productId" component={StocksList} />

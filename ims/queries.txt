@@ -48,7 +48,7 @@ query queryUsersByUserIdIndex {
   }
 }
 mutation CreateProduct {
-	createProduct(input:{id: "1", name:"Product1", description: "Product dexcription 1", partnerId:"1", active:true, quantity: 7.0, units: "Grams",name_partnerId:"xxx"}) {
+	createProduct(input:{id: "1",unitPrice:3, name:"Product1", description: "Product dexcription 1", partnerId:"1", active:true, quantity: 7.0, units: "Grams",name_partnerId:"xxx"}) {
 		id
     name
 		description
@@ -58,17 +58,20 @@ mutation CreateProduct {
 		units
 	}
 }
-mutation PutUser {
-	putUser(id: "xxx1", active:true,name: "User1-1", userId: "userId1-1", accessCode: "6789-1",partnerId:"1",accessCode_partnerId:"1") {
+mutation CreateUser {
+	createUser(input:{ id: "fc8f9601-574c-4d9d-96ec-4eeb68bf9820", name: "1", phone: "2", salary: "6", email: "3", accessCode: "4", userId: "5", active: true}) {
 		 id
 		 name
 		 userId
 		 accessCode
     active
+    phone
+    email
+    salary
 	}
 }
 mutation CreateStock {
-	createStock(input:{id: "2", description: "Product dexcription 1", productId:"6be417ab-0573-444b-a363-f763ed99835b", type:"Issue"}) {
+	createStock(input:{id: "f2ac0283-ba63-4a27-a371-e070bd61814a", productId: "6be417ab-0573-444b-a363-f763ed99835b", description: "Test", when: "2018-04-30T04:15:00Z", type: "Receipt", reason: "Used for customer service", quantity: 6}) {
 		id
 		description
 		partnerId
@@ -82,5 +85,23 @@ query QueryStocksByProductIdIndex {
 			      id
       description
     }
+	}
+}
+mutation CreateCustomer {
+	createCustomer(input:{ id: "6d1ae751-b528-4d3f-b106-304f324e0442", name: "Vik", phone: "214234", email: "sdfjnjdsf@gmail.com", active: true }) {
+		id
+		name
+		phone
+    email
+    active
+	}
+}
+mutation updateCustomer {
+	updateCustomer(input:{ id: "6d1ae751-b528-4d3f-b106-304f324e0442", name: "Vik1", phone: "214234", email: "sdfjnjdsf@gmail.com", active: true }) {
+		id
+		name
+		phone
+    email
+    active
 	}
 }

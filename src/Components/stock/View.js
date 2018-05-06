@@ -156,6 +156,28 @@ class View extends Component {
                <option value='Product purchased'>Product purchased</option>
              </select>
            );
+           const whenField = updateMode ? (
+                <div>{moment(stock.when).format('LL')}&nbsp;{moment(stock.when).format('LT')}</div>
+              ) : (
+                <div className="field required eight wide">
+                    <label htmlFor="when">When</label>
+                    <DatePicker
+                        className="ui container"
+                        customInput={<DateTimePickerCustomInput />}
+                        id="when"
+                        selected={moment(this.state.stock.when)}
+                        onChange={this.handleDateChange.bind(this, 'when')}
+                        peekNextMonth
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="select"
+                        showTimeSelect
+                        timeFormat="hh:mm a"
+                        timeIntervals={15}
+                        dateFormat="LL LT"
+                    />
+                </div>
+              );
 
         return (
           <div className="ui container raised very padded segment">
@@ -163,28 +185,16 @@ class View extends Component {
               <h1 className="ui header">{title}</h1>
               <div>Fields marked * are mandatory.</div>
               <br/>
-              Product Name : {product && product.name}
+              <b>Product Name :</b> {product && product.name}&nbsp;&nbsp;
+              <b>Quantity :</b> {product && product.quantity}&nbsp;{product && product.units}
+              <br/>
               <div className="field required eight wide">
                   <label htmlFor="description">Description</label>
                   <input type="text" id="description" value={this.state.stock.description} onChange={this.handleChange.bind(this,'description')}/>
               </div>
               <div className="field required eight wide">
                   <label htmlFor="when">When</label>
-                  <DatePicker
-                      className="ui container"
-                      customInput={<DateTimePickerCustomInput />}
-                      id="when"
-                      selected={moment(this.state.stock.when)}
-                      onChange={this.handleDateChange.bind(this, 'when')}
-                      peekNextMonth
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                      showTimeSelect
-                      timeFormat="hh:mm a"
-                      timeIntervals={15}
-                      dateFormat="LL LT"
-                  />
+                  {whenField}
               </div>
               <div className="field required eight wide">
                   <label htmlFor="type">Type</label>

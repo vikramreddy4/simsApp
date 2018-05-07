@@ -2,15 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import "semantic-ui-css/semantic.min.css";
 import 'react-datepicker/dist/react-datepicker.css';
-import { Link } from "react-router-dom";
 
 import './App.css';
 import appSyncConfig from "./AppSync";
 import { ApolloProvider } from "react-apollo";
 import AWSAppSyncClient from "aws-appsync";
 import { Rehydrated } from "aws-appsync-react";
-
-import Header from './Components/Header';
 
 import ViewUser from './Components/user/View';
 import UsersList from './Components/user/List';
@@ -27,16 +24,6 @@ import CustomersList from './Components/customer/List';
 import ViewOrder from './Components/order/View';
 import OrdersList from './Components/order/List';
 
-/*
-*/
-const Home = () => (
-  <div className="ui container">
-    <Link to={`/`}>Home</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-    <Link to={`/users`}>Users</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-    <Link to={`/products`}>Products</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-    <Link to={`/customers`}>Customers</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
-  </div>
-);
 const App = () => (
   <Router path="/" component={App}>
     <div>

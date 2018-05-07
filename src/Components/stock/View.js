@@ -15,6 +15,7 @@ import moment from 'moment';
 import { nearest15min } from "../../Utils";
 import DateTimePickerCustomInput from "../DateTimePickerCustomInput";
 
+/*
 var TYPES = [
   {value: 'Issue', label:'Issue'},
   {value: 'Receipt', label:'Receipt'},
@@ -26,6 +27,7 @@ var REASON_TYPES = [
   {type: 'Receipt', value: 'Product purchased'},
   {type: 'Receipt', value: 'Stock adjustment'},
 ];
+*/
 
 class View extends Component {
 
@@ -134,7 +136,7 @@ class View extends Component {
   componentDidMount() {
     console.log('setting properties');
     if(this.props.stock) {
-      var {stock, product} = this.state;
+      var {stock} = this.state;
       stock.id = this.props.stock.id;
       stock.type = this.props.stock.type;
       stock.reason = this.props.stock.reason;
@@ -153,7 +155,7 @@ class View extends Component {
   }
 
     render() {
-        const { product, stock, loading } = this.props;
+        const { product, stock } = this.props;
         const errors = this.validateInputs(this.state.stock.quantity, this.state.stock.description, this.state.stock.reason);
         const isEnabled = !Object.keys(errors).some(x => errors[x]);
         var updateMode = false;

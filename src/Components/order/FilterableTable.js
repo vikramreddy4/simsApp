@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import Table from "./Table";
 import SearchBar from "../SearchBar";
 import Header from '../Header';

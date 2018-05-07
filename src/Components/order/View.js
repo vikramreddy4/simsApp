@@ -117,7 +117,7 @@ class View extends Component {
   }
 
     render() {
-        const { customer, order, loading } = this.props;
+        const { customer, order } = this.props;
         const errors = this.validateInputs(this.state.order.services, this.state.order.cost, this.state.order.when);
         const isEnabled = !Object.keys(errors).some(x => errors[x]);
         var updateMode = false;

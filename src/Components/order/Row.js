@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from 'moment';
 
 export default class Row extends React.Component {
   render() {
@@ -8,7 +9,7 @@ export default class Row extends React.Component {
         <td><Link to={`/order/${this.props.order.customerId}/${this.props.order.id}`}>{this.props.order.services}</Link></td>
         <td>{this.props.order.cost}</td>
         <td>{JSON.stringify(this.props.order.discount)}</td>
-        <td>{this.props.order.when}</td>
+      <td>{moment(this.props.order.when).format('LL')}&nbsp;{moment(this.props.order.when).format('LT')}</td>
       </tr>
     );
   }

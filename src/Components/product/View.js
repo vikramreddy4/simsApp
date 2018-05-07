@@ -74,7 +74,6 @@ class View extends Component {
 
   componentDidMount() {
     console.log('setting properties');
-    const { getProduct} = this.props;
     if(this.props.product) {
       const {product} = this.state;
       console.log(product);
@@ -94,7 +93,7 @@ class View extends Component {
   }
 
     render() {
-        const { product, loading } = this.props;
+        const { product } = this.props;
         const errors = this.validateInputs(this.state.product.name, this.state.product.description, this.state.product.units);
         const isEnabled = !Object.keys(errors).some(x => errors[x]);
         var title = "Create Product";
@@ -112,49 +111,31 @@ class View extends Component {
                 <h1 className="ui header">{title}</h1>
                 <div>Fields marked * are mandatory.</div>
                 <br/>
-                {
-                  product &&
                   <div className="field required eight wide">
                       <label htmlFor="name">Name</label>
                       <input type="text" id="name" value={this.state.product.name} onChange={this.handleChange.bind(this,'name')}/>
                   </div>
-                }
-                {
-                  product &&
                   <div className="field required eight wide">
                       <label htmlFor="description">Description</label>
                       <input type="text" id="description" value={this.state.product.description} onChange={this.handleChange.bind(this,'description')}/>
                   </div>
-                }
-                  {
-                    product &&
                   <div className="field required eight wide">
                       <label htmlFor="units">Units</label>
                       <input type="text" id="units" value={this.state.product.units} onChange={this.handleChange.bind(this,'units')}/>
                   </div>
-                }
-                  {
-                    product &&
                   <div className="field required eight wide">
                       <label htmlFor="units">Unit price</label>
                       <input type="text" id="unitPrice" value={this.state.product.unitPrice} onChange={this.handleChange.bind(this,'unitPrice')}/>
                   </div>
-                }
-                  {
-                    product &&
                   <div className="field required eight wide">
                       <label htmlFor="active">Active</label>
                       <input type="checkbox" id="active" checked={this.state.product.active} onChange={this.handleChange.bind(this,'active')}/>
                   </div>
-                }
-                  {
-                    product &&
                   <div className="field eight wide">
                       <label>Quantity</label>
                       {this.state.product.quantity}
                   </div>
-                }
-          <input type="hidden" id="id" value={this.props.match.params.id}/>
+                  <input type="hidden" id="id" value={this.props.match.params.id}/>
         </div>
           <br/>
           <div className="ui buttons">

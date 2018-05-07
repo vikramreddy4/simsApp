@@ -10,10 +10,6 @@ import { ApolloProvider } from "react-apollo";
 import AWSAppSyncClient from "aws-appsync";
 import { Rehydrated } from "aws-appsync-react";
 
-import AllEvents from './Components/AllEvents';
-import NewEvent from './Components/NewEvent';
-import ViewEvent from './Components/ViewEvent';
-import ContactsList from './Components/contacts/ContactsList';
 import Header from './Components/Header';
 
 import ViewUser from './Components/users/View';
@@ -41,13 +37,6 @@ const Home = () => (
     <Link to={`/customers`}>Customers</Link>&nbsp;&nbsp;|&nbsp;&nbsp;
   </div>
 );
-const EventsList = () => (
-  <div className="ui container">
-    <Home/>
-    <h1 className="ui header">All Events</h1>
-    <AllEvents />
-  </div>
-);
 const App = () => (
   <Router path="/" component={App}>
     <div>
@@ -62,10 +51,6 @@ const App = () => (
       <Route path="/stock/:productId/:id" component={ViewStock} />
       <Route path="/orders/:customerId" component={OrdersList} />
       <Route path="/order/:customerId/:id" component={ViewOrder} />
-      <Route path="/events" component={EventsList} />
-      <Route path="/contacts" component={ContactsList} />
-      <Route path="/newEvent" component={NewEvent} />
-      <Route path="/event/:id" component={ViewEvent} />
     </div>
   </Router>
   /*

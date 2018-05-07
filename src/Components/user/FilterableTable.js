@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Table from "./Table";
 import SearchBar from "../SearchBar";
 import Header from '../Header';
+import {CSVLink} from 'react-csv';
 
 export default class FilterableTable extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ export default class FilterableTable extends React.Component {
       <div>
         <Header/>
         <h1>Users</h1>
-        Click <Link to={`/user/new`}>here</Link> to create new User.
+      Click <Link to={`/user/new`}>here</Link> to create new User. <CSVLink data={this.props.users} >Download</CSVLink>
         <SearchBar filterText={this.state.filterText} onFilterTextInput={this.handleFilterTextInput}/>
         <Table users={this.props.users} filterText={this.state.filterText}/>
       </div>

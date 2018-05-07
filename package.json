@@ -12,6 +12,7 @@
     "npm": "^5.8.0",
     "react": "^16.1.1",
     "react-apollo": "^2.0.1",
+    "react-csv": "^1.0.14",
     "react-datepicker": "^0.61.0",
     "react-dom": "^16.1.1",
     "react-navigation": "1.0.0-beta.27",

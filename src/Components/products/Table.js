@@ -18,6 +18,7 @@ export default class Table extends React.Component {
             <th>Active</th>
             <th>Quantity</th>
             <th>Price per unit</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

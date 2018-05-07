@@ -9,14 +9,16 @@ export default class Row extends React.Component {
         <td>{this.props.product.description}</td>
         <td>{JSON.stringify(this.props.product.active)}</td>
         <td>
-            <Link to={`/stocks/${this.props.product.id}`}>{this.props.product.quantity}</Link>
+            {this.props.product.quantity}
             &nbsp;
             {this.props.product.units}
-            &nbsp;
-            &nbsp;
-            ( <Link to={`/stock/${this.props.product.id}/new`}>Adjust</Link> )
         </td>
         <td>{this.props.product.unitPrice}</td>
+        <td>
+            <Link to={`/stocks/${this.props.product.id}`}>View</Link>
+            &nbsp;|&nbsp;
+            <Link to={`/stock/${this.props.product.id}/new`}>New</Link>
+        </td>
       </tr>
     );
   }

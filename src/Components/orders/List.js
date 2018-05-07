@@ -1,27 +1,27 @@
 import React, { Component } from "react";
 import { graphql, compose } from "react-apollo";
 import FilterableTable from "./FilterableTable";
-import QueryStocks from "../../GraphQL/QueryStocks";
+import QueryOrders from "../../GraphQL/QueryOrders";
 
 class List extends Component {
     render() {
-      const { stocks } = this.props;
+      const { orders } = this.props;
         return (
-          <FilterableTable stocks={stocks} />
+          <FilterableTable orders={orders} />
         );
     }
 }
 
 export default compose(
     graphql(
-        QueryStocks,
+        QueryOrders,
         {
-          options: ({ match: { params: { productId } } }) => ({
-              variables: { productId },
+          options: ({ match: { params: { customerId } } }) => ({
+              variables: { customerId },
               fetchPolicy: 'cache-and-network',
           }),
-          props: ({ data: { queryStocksByProductIdIndex = { items: [] } } }) => ({
-              stocks: queryStocksByProductIdIndex.items
+          props: ({ data: { queryOrdersByCustomerIdIndex = { items: [] } } }) => ({
+              orders: queryOrdersByCustomerIdIndex.items
           })
         }
     )

@@ -5,11 +5,10 @@ export default class Row extends React.Component {
   render() {
     return (
       <tr>
-        <td><Link to={`/stock/${this.props.stock.productId}/${this.props.stock.id}`}>{this.props.stock.description}</Link></td>
-        <td>{this.props.stock.quantity}</td>
-        <td>{JSON.stringify(this.props.stock.usedId)}</td>
-        <td>{this.props.stock.type}</td>
-        <td>{this.props.stock.when}</td>
+        <td><Link to={`/order/${this.props.order.customerId}/${this.props.order.id}`}>{this.props.order.services}</Link></td>
+        <td>{this.props.order.cost}</td>
+        <td>{JSON.stringify(this.props.order.discount)}</td>
+        <td>{this.props.order.when}</td>
       </tr>
     );
   }

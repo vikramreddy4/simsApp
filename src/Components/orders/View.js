@@ -3,12 +3,12 @@ import { graphql, compose } from "react-apollo";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 
-import QueryGetProduct from "../../GraphQL/QueryGetProduct";
-import QueryGetStock from "../../GraphQL/QueryGetStock";
-import MutationCreateStock from "../../GraphQL/MutationCreateStock";
-import MutationUpdateStock from "../../GraphQL/MutationUpdateStock";
+import QueryGetCustomer from "../../GraphQL/QueryGetCustomer";
+import QueryGetOrder from "../../GraphQL/QueryGetOrder";
+import MutationCreateOrder from "../../GraphQL/MutationCreateOrder";
+import MutationUpdateOrder from "../../GraphQL/MutationUpdateOrder";
 /*
-import ProductFragment from "../products/Fragment";
+import CustomerFragment from "../customers/Fragment";
 */
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
@@ -16,51 +16,39 @@ import moment from 'moment';
 import { nearest15min } from "../../Utils";
 import DateTimePickerCustomInput from "../DateTimePickerCustomInput";
 
-var TYPES = [
-  {value: 'Issue', label:'Issue'},
-  {value: 'Receipt', label:'Receipt'},
-];
-
-var REASON_TYPES = [
-  {type: 'Issue', value: 'Used for customer service'},
-  {type: 'Issue', value: 'Stock adjustment'},
-  {type: 'Receipt', value: 'Product purchased'},
-  {type: 'Receipt', value: 'Stock adjustment'},
-];
-
 class View extends Component {
 
   constructor() {
     super();
     this.state = {
-      stock: {
+      order: {
         id:'',
-        productId: '',
-        description: '',
+        customerId: '',
+        partnerId: '1',
+        cost: 0,
         when: nearest15min().format(),
-        type: 'Receipt',
-        reason: 'Used for customer service',
-        quantity:0,
+        discount: 0,
+        services: '',
       },
       errors: {
-        name: true,
-        description: true,
-        units: true,
+        services: true,
+        cost: true,
+        when: true,
       },
     };
   };
 
   static defaultProps = {
-      createStock: () => null,
-      updateStock: () => null,
+      createOrder: () => null,
+      updateOrder: () => null,
   }
 
-  validateInputs(quantity, description, reason) {
+  validateInputs(services, cost, when) {
     // true means invalid, so our conditions got reversed
     return {
-      quantity: quantity.length === 0 || quantity <= 0,
-      description: description.length === 0,
-      reason: reason.length === 0,
+      services: services.length === 0 || services <= 0,
+      cost: cost.length === 0 || services <= 0,
+      when: when.length === 0,
     };
   }
 
@@ -71,58 +59,57 @@ class View extends Component {
   handleSave = async (e) => {
       e.stopPropagation();
       e.preventDefault();
-      const { createStock, updateStock, history } = this.props;
+      const { createOrder, updateOrder, history } = this.props;
       if(this.props.match.params.id === 'new') {
-        this.state.stock.id = uuid();
-        this.state.stock.productId = this.props.match.params.productId;
-        const { stock } = this.state;
-        console.log(stock);
-        await createStock(stock);
+        this.state.order.id = uuid();
+        this.state.order.customerId = this.props.match.params.customerId;
+        const { order } = this.state;
+        console.log(order);
+        await createOrder(order);
       }else {
-        this.state.stock.id = this.props.match.params.id;
-        const { stock } = this.state;
-        console.log(stock);
-        await updateStock(stock);
+        this.state.order.id = this.props.match.params.id;
+        const { order } = this.state;
+        console.log(order);
+        await updateOrder(order);
       }
-      history.push('/products');
+      history.push('/customers');
   }
 
   handleChange(field, event) {
     console.log(event.target.type);
-    const { stock } = this.state;
+    const { order } = this.state;
     if(event.target.type === 'number') {
       var parsed = Number.parseInt(event.target.value, 0);
       if (Number.isNaN(parsed)) {
         return 0;
       }
       const value = parsed;
-      console.log(stock);
-      stock[field] = value;
+      console.log(order);
+      order[field] = value;
     }else {
       const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-      console.log(stock);
-      stock[field] = value;
+      console.log(order);
+      order[field] = value;
     }
-      this.setState({ stock });
-      console.log(stock);
+      this.setState({ order });
+      console.log(order);
   }
 
   componentDidMount() {
     console.log('setting properties');
-    if(this.props.stock) {
-      var {stock} = this.state;
-      console.log(stock);
-      stock.id = this.props.stock.id;
-      stock.type = this.props.stock.type;
-      stock.reason = this.props.stock.reason;
-      stock.description = this.props.stock.description;
-      stock.quantity = this.props.stock.quantity;
-      stock.when = this.props.stock.when;
-      stock.productId = this.props.stock.productId;
-      console.log(stock);
-      this.setState({stock:stock});
+    if(this.props.order) {
+      var {order} = this.state;
+      console.log(order);
+      order.id = this.props.order.id;
+      order.discount = this.props.order.discount;
+      order.cost = this.props.order.cost;
+      order.services = this.props.order.services;
+      order.when = this.props.order.when;
+      order.customerId = this.props.order.customerId;
+      console.log(order);
+      this.setState({order:order});
       console.log('properties were set : ');
-      console.log(this.state.stock);
+      console.log(this.state.order);
     }else {
       console.log('Unable to set properties');
     }
@@ -130,34 +117,20 @@ class View extends Component {
   }
 
     render() {
-        const { product, stock, loading } = this.props;
-        const errors = this.validateInputs(this.state.stock.quantity, this.state.stock.description, this.state.stock.reason);
+        const { customer, order, loading } = this.props;
+        const errors = this.validateInputs(this.state.order.services, this.state.order.cost, this.state.order.when);
         const isEnabled = !Object.keys(errors).some(x => errors[x]);
         var updateMode = false;
-        var title = "New Stock entry";
-        if(stock) {
+        var title = "New Order entry";
+        if(order) {
           updateMode = true;
-          title = "Update Stock entry";
+          title = "Update Order entry";
         }
-        const typeField = updateMode ? (
-             <div>{this.props.stock.type}</div>
-           ) : (
-             <select id="type" onChange={this.handleChange.bind(this,'type')}>
-               <option value='Issue'>Issue</option>
-               <option value='Receipt'>Receipt</option>
-             </select>
-           );
-        const reasonField = updateMode ? (
-             <div>{this.props.stock.reason}</div>
-           ) : (
-             <select id="reason" onChange={this.handleChange.bind(this,'reason')}>
-               <option value='Used for customer service'>Used for customer service</option>
-               <option value='Stock adjustment'>Stock adjustment</option>
-               <option value='Product purchased'>Product purchased</option>
-             </select>
-           );
            const whenField = updateMode ? (
-                <div>{moment(stock.when).format('LL')}&nbsp;{moment(stock.when).format('LT')}</div>
+               <div className="field required eight wide">
+                  <label htmlFor="when">When</label>
+                  <div>{moment(order.when).format('LL')}&nbsp;{moment(order.when).format('LT')}</div>
+                </div>
               ) : (
                 <div className="field required eight wide">
                     <label htmlFor="when">When</label>
@@ -165,7 +138,7 @@ class View extends Component {
                         className="ui container"
                         customInput={<DateTimePickerCustomInput />}
                         id="when"
-                        selected={moment(this.state.stock.when)}
+                        selected={moment(this.state.order.when)}
                         onChange={this.handleDateChange.bind(this, 'when')}
                         peekNextMonth
                         showMonthDropdown
@@ -185,35 +158,27 @@ class View extends Component {
               <h1 className="ui header">{title}</h1>
               <div>Fields marked * are mandatory.</div>
               <br/>
-              <b>Product Name :</b> {product && product.name}&nbsp;&nbsp;
-              <b>Quantity :</b> {product && product.quantity}&nbsp;{product && product.units}
+              <b>Customer Name :</b> {customer && customer.name}&nbsp;&nbsp;
               <br/>
+              {whenField}
               <div className="field required eight wide">
-                  <label htmlFor="description">Description</label>
-                  <input type="text" id="description" value={this.state.stock.description} onChange={this.handleChange.bind(this,'description')}/>
+                  <label htmlFor="services">Service / Appointment details</label>
+                  <input type="text" id="services" value={this.state.order.services} onChange={this.handleChange.bind(this,'services')}/>
               </div>
               <div className="field required eight wide">
-                  <label htmlFor="when">When</label>
-                  {whenField}
-              </div>
-              <div className="field required eight wide">
-                  <label htmlFor="type">Type</label>
-                  {reasonField}
-              </div>
-              <div className="field required eight wide">
-                  <label htmlFor="reason">Reason</label>
-                  {reasonField}
+                  <label htmlFor="cost">Cost</label>
+                  <input type="number" id="cost" value={this.state.order.cost} onChange={this.handleChange.bind(this,'cost')}/>
               </div>
               <div className="field eight wide">
-                  <label>Quantity</label>
-                  <input type="number" id="quantity" value={this.state.stock.quantity} onChange={this.handleChange.bind(this,'quantity')}/>
+                  <label>Discount</label>
+                <input type="number" id="discount" value={this.state.order.discount} onChange={this.handleChange.bind(this,'discount')}/>
               </div>
-              <input type="hidden" id="productId" value={this.props.match.params.productId}/>
+              <input type="hidden" id="customerId" value={this.props.match.params.customerId}/>
               <input type="hidden" id="id" value={this.props.match.params.id}/>
           </div>
           <br/>
           <div className="ui buttons">
-              <Link to="/stocks" className="ui button">Cancel</Link>
+              <Link to="/customers" className="ui button">Cancel</Link>
               <div className="or"></div>
               <button disabled={!isEnabled} className="ui positive button" onClick={this.handleSave}>Save</button>
           </div>
@@ -224,42 +189,42 @@ class View extends Component {
 
 export default compose (
   graphql(
-      QueryGetProduct,
+      QueryGetCustomer,
       {
-          options: ({ match: { params: { productId } } }) => ({
-              variables: { id: productId },
+          options: ({ match: { params: { customerId } } }) => ({
+              variables: { id: customerId },
               fetchPolicy: 'cache-and-network',
           }),
-          props: ({ data: { getProduct: product, loading} }) => ({
-              product,
+          props: ({ data: { getCustomer: customer, loading} }) => ({
+              customer,
               loading,
           }),
       }
   ),
   graphql(
-      QueryGetStock,
+      QueryGetOrder,
       {
           options: ({ match: { params: { id } } }) => ({
               variables: { id },
               fetchPolicy: 'cache-and-network',
           }),
-          props: ({ data: { getStock: stock, loading} }) => ({
-              stock,
+          props: ({ data: { getOrder: order, loading} }) => ({
+              order,
               loading,
           }),
       }
   )
   ,
   graphql(
-        MutationCreateStock,
+        MutationCreateOrder,
       {
           props: (props) => ({
-              createStock: (stock) => {
+              createOrder: (order) => {
                   return props.mutate({
-                      variables: {...stock},
+                      variables: {...order},
                       optimisticResponse: () => ({
-                          createStock: {
-                              ...stock, __typename: 'Stock'
+                          createOrder: {
+                              ...order, __typename: 'Order'
                           }
                       }),
                   })
@@ -268,15 +233,15 @@ export default compose (
       }
   ),
   graphql(
-        MutationUpdateStock,
+        MutationUpdateOrder,
       {
           props: (props) => ({
-              updateStock: (stock) => {
+              updateOrder: (order) => {
                   return props.mutate({
-                      variables: {...stock},
+                      variables: {...order},
                       optimisticResponse: () => ({
-                          updateStock: {
-                              ...stock, __typename: 'Stock'
+                          updateOrder: {
+                              ...order, __typename: 'Order'
                           }
                       }),
                   })

@@ -10,9 +10,7 @@ export default class Row extends React.Component {
         <td>{this.props.customer.email}</td>
         <td>
             <Link to={`/orders/${this.props.customer.id}`}>View</Link>
-            &nbsp;|
-            &nbsp;
-            &nbsp;
+            &nbsp;|&nbsp;
             <Link to={`/order/${this.props.customer.id}/new`}>New</Link>
         </td>
       </tr>

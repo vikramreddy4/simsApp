@@ -213,7 +213,7 @@ class View extends Component {
           </div>
           <br/>
           <div className="ui buttons">
-              <Link to="/stocks" className="ui button">Cancel</Link>
+              <Link to="/products" className="ui button">Cancel</Link>
               <div className="or"></div>
               <button disabled={!isEnabled} className="ui positive button" onClick={this.handleSave}>Save</button>
           </div>

@@ -23,9 +23,9 @@ export default class FilterableTable extends React.Component {
     return (
       <div>
         <Header/>
-        <h1>Stock</h1>
+        <h1>Order</h1>
         <SearchBar filterText={this.state.filterText} onFilterTextInput={this.handleFilterTextInput}/>
-        <Table stocks={this.props.stocks} filterText={this.state.filterText}/>
+        <Table orders={this.props.orders} filterText={this.state.filterText}/>
       </div>
     );
   }

@@ -28,6 +28,9 @@ import StocksList from './Components/stock/List';
 import ViewCustomer from './Components/customers/View';
 import CustomersList from './Components/customers/List';
 
+import ViewOrder from './Components/orders/View';
+import OrdersList from './Components/orders/List';
+
 /*
 */
 const Home = () => (
@@ -57,6 +60,8 @@ const App = () => (
       <Route path="/product/:id" component={ViewProduct} />
       <Route path="/stocks/:productId" component={StocksList} />
       <Route path="/stock/:productId/:id" component={ViewStock} />
+      <Route path="/orders/:customerId" component={OrdersList} />
+      <Route path="/order/:customerId/:id" component={ViewOrder} />
       <Route path="/events" component={EventsList} />
       <Route path="/contacts" component={ContactsList} />
       <Route path="/newEvent" component={NewEvent} />

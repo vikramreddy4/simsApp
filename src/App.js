@@ -12,20 +12,20 @@ import { Rehydrated } from "aws-appsync-react";
 
 import Header from './Components/Header';
 
-import ViewUser from './Components/users/View';
-import UsersList from './Components/users/List';
+import ViewUser from './Components/user/View';
+import UsersList from './Components/user/List';
 
-import ViewProduct from './Components/products/View';
-import ProductsList from './Components/products/List';
+import ViewProduct from './Components/product/View';
+import ProductsList from './Components/product/List';
 
 import ViewStock from './Components/stock/View';
 import StocksList from './Components/stock/List';
 
-import ViewCustomer from './Components/customers/View';
-import CustomersList from './Components/customers/List';
+import ViewCustomer from './Components/customer/View';
+import CustomersList from './Components/customer/List';
 
-import ViewOrder from './Components/orders/View';
-import OrdersList from './Components/orders/List';
+import ViewOrder from './Components/order/View';
+import OrdersList from './Components/order/List';
 
 /*
 */

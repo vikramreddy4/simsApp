@@ -3,10 +3,10 @@ import { graphql, compose } from "react-apollo";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 
-import QueryGetProduct from "../../GraphQL/QueryGetProduct";
-import QueryGetStock from "../../GraphQL/QueryGetStock";
-import MutationCreateStock from "../../GraphQL/MutationCreateStock";
-import MutationUpdateStock from "../../GraphQL/MutationUpdateStock";
+import QueryGetProduct from "../../GraphQL/product/QueryGetProduct";
+import QueryGetStock from "../../GraphQL/stock/QueryGetStock";
+import MutationCreateStock from "../../GraphQL/stock/MutationCreateStock";
+import MutationUpdateStock from "../../GraphQL/stock/MutationUpdateStock";
 /*
 import ProductFragment from "../products/Fragment";
 */

@@ -3,9 +3,9 @@ import { graphql, compose } from "react-apollo";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 
-import QueryGetCustomer from "../../GraphQL/QueryGetCustomer";
-import MutationCreateCustomer from "../../GraphQL/MutationCreateCustomer";
-import MutationUpdateCustomer from "../../GraphQL/MutationUpdateCustomer";
+import QueryGetCustomer from "../../GraphQL/customer/QueryGetCustomer";
+import MutationCreateCustomer from "../../GraphQL/customer/MutationCreateCustomer";
+import MutationUpdateCustomer from "../../GraphQL/customer/MutationUpdateCustomer";
 
 class View extends Component {
 

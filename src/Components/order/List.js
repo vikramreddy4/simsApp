@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { graphql, compose } from "react-apollo";
 import FilterableTable from "./FilterableTable";
-import QueryOrders from "../../GraphQL/QueryOrders";
+import QueryOrders from "../../GraphQL/order/QueryOrders";
 
 class List extends Component {
     render() {

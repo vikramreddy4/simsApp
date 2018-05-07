@@ -3,10 +3,10 @@ import { graphql, compose } from "react-apollo";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 
-import QueryGetCustomer from "../../GraphQL/QueryGetCustomer";
-import QueryGetOrder from "../../GraphQL/QueryGetOrder";
-import MutationCreateOrder from "../../GraphQL/MutationCreateOrder";
-import MutationUpdateOrder from "../../GraphQL/MutationUpdateOrder";
+import QueryGetCustomer from "../../GraphQL/customer/QueryGetCustomer";
+import QueryGetOrder from "../../GraphQL/order/QueryGetOrder";
+import MutationCreateOrder from "../../GraphQL/order/MutationCreateOrder";
+import MutationUpdateOrder from "../../GraphQL/order/MutationUpdateOrder";
 /*
 import CustomerFragment from "../customers/Fragment";
 */

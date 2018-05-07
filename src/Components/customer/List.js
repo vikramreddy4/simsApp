@@ -1,26 +1,26 @@
 import React, { Component } from "react";
 import { graphql, compose } from "react-apollo";
 import FilterableTable from "./FilterableTable";
-import QueryAllProducts from "../../GraphQL/QueryAllProducts";
+import QueryAllCustomers from "../../GraphQL/customer/QueryAllCustomers";
 
 class List extends Component {
     render() {
-      const { products } = this.props;
+      const { customers } = this.props;
         return (
-          <FilterableTable products={products} />
+          <FilterableTable customers={customers} />
         );
     }
 }
 
 export default compose(
     graphql(
-        QueryAllProducts,
+        QueryAllCustomers,
         {
             options: {
                 fetchPolicy: 'cache-and-network',
             },
-            props: ({ data: { listProducts = { items: [] } } }) => ({
-                products: listProducts.items
+            props: ({ data: { listCustomers = { items: [] } } }) => ({
+                customers: listCustomers.items
             })
         }
     )

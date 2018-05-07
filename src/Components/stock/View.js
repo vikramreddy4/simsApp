@@ -7,9 +7,8 @@ import QueryGetProduct from "../../GraphQL/product/QueryGetProduct";
 import QueryGetStock from "../../GraphQL/stock/QueryGetStock";
 import MutationCreateStock from "../../GraphQL/stock/MutationCreateStock";
 import MutationUpdateStock from "../../GraphQL/stock/MutationUpdateStock";
-/*
-import ProductFragment from "../products/Fragment";
-*/
+import MutationUpdateProduct from "../../GraphQL/product/MutationUpdateProduct";
+
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -38,8 +37,12 @@ class View extends Component {
         productId: '',
         description: '',
         when: nearest15min().format(),
-        type: 'Receipt',
+        type: 'Issue',
         reason: 'Used for customer service',
+        quantity:0,
+      },
+      product: {
+        id:'',
         quantity:0,
       },
       errors: {
@@ -71,13 +74,16 @@ class View extends Component {
   handleSave = async (e) => {
       e.stopPropagation();
       e.preventDefault();
+      console.log('Current stock level for this product : '+this.props.product.quantity);
       const { createStock, updateStock, history } = this.props;
       if(this.props.match.params.id === 'new') {
         this.state.stock.id = uuid();
         this.state.stock.productId = this.props.match.params.productId;
         const { stock } = this.state;
         console.log(stock);
-        await createStock(stock);
+        if(this.handleUpdateStock()) {
+          await createStock(stock);
+        }
       }else {
         this.state.stock.id = this.props.match.params.id;
         const { stock } = this.state;
@@ -85,6 +91,24 @@ class View extends Component {
         await updateStock(stock);
       }
       history.push('/products');
+  }
+
+  handleUpdateStock() {
+    const { updateProduct } = this.props;
+    this.state.product.id = this.props.product.id;
+    if(this.state.stock.type === 'Issue') {
+      if(this.state.stock.quantity > this.props.product.quantity) {
+        alert('Low Inventory level, cannot perform the transaction');
+        return false;
+      }
+      this.state.product.quantity = this.props.product.quantity - this.state.stock.quantity;
+    }else {
+      this.state.product.quantity = this.props.product.quantity + this.state.stock.quantity;
+    }
+    const { product } = this.state;
+    console.log(product);
+    updateProduct(product);
+    return true;
   }
 
   handleChange(field, event) {
@@ -110,8 +134,7 @@ class View extends Component {
   componentDidMount() {
     console.log('setting properties');
     if(this.props.stock) {
-      var {stock} = this.state;
-      console.log(stock);
+      var {stock, product} = this.state;
       stock.id = this.props.stock.id;
       stock.type = this.props.stock.type;
       stock.reason = this.props.stock.reason;
@@ -157,10 +180,11 @@ class View extends Component {
              </select>
            );
            const whenField = updateMode ? (
-                <div>{moment(stock.when).format('LL')}&nbsp;{moment(stock.when).format('LT')}</div>
+                <div>
+                  {moment(stock.when).format('LL')}&nbsp;{moment(stock.when).format('LT')}
+                </div>
               ) : (
                 <div className="field required eight wide">
-                    <label htmlFor="when">When</label>
                     <DatePicker
                         className="ui container"
                         customInput={<DateTimePickerCustomInput />}
@@ -185,9 +209,10 @@ class View extends Component {
               <h1 className="ui header">{title}</h1>
               <div>Fields marked * are mandatory.</div>
               <br/>
-              <b>Product Name :</b> {product && product.name}&nbsp;&nbsp;
-              <b>Quantity :</b> {product && product.quantity}&nbsp;{product && product.units}
-              <br/>
+              <div className="field eight wide">
+                <b>Product Name :</b> {product && product.name}&nbsp;&nbsp;
+                <b>Quantity :</b> {product && product.quantity}&nbsp;{product && product.units}
+              </div>
               <div className="field required eight wide">
                   <label htmlFor="description">Description</label>
                   <input type="text" id="description" value={this.state.stock.description} onChange={this.handleChange.bind(this,'description')}/>
@@ -198,15 +223,16 @@ class View extends Component {
               </div>
               <div className="field required eight wide">
                   <label htmlFor="type">Type</label>
-                  {reasonField}
+                  {typeField}
               </div>
               <div className="field required eight wide">
                   <label htmlFor="reason">Reason</label>
                   {reasonField}
               </div>
               <div className="field eight wide">
-                  <label>Quantity</label>
+                  <label>Quantity &nbsp;({product && product.units})</label>
                   <input type="number" id="quantity" value={this.state.stock.quantity} onChange={this.handleChange.bind(this,'quantity')}/>
+
               </div>
               <input type="hidden" id="productId" value={this.props.match.params.productId}/>
               <input type="hidden" id="id" value={this.props.match.params.id}/>
@@ -277,6 +303,23 @@ export default compose (
                       optimisticResponse: () => ({
                           updateStock: {
                               ...stock, __typename: 'Stock'
+                          }
+                      }),
+                  })
+              }
+          })
+      }
+  ),
+  graphql(
+        MutationUpdateProduct,
+      {
+          props: (props) => ({
+              updateProduct: (product) => {
+                  return props.mutate({
+                      variables: {...product},
+                      optimisticResponse: () => ({
+                          updateProduct: {
+                              ...product, __typename: 'Product'
                           }
                       }),
                   })

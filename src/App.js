@@ -53,8 +53,6 @@ const App = () => (
       <Route path="/order/:customerId/:id" component={ViewOrder} />
     </div>
   </Router>
-  /*
-  */
 );
 
 const client = new AWSAppSyncClient({

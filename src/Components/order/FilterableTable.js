@@ -22,7 +22,7 @@ export default class FilterableTable extends React.Component {
     return (
       <div>
         <Header/>
-        <h1>Order</h1>
+        <h2>Orders for Customer : {this.props.customer && this.props.customer.name}</h2>
         <SearchBar filterText={this.state.filterText} onFilterTextInput={this.handleFilterTextInput}/>
         <Table orders={this.props.orders} filterText={this.state.filterText}/>
       </div>

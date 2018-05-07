@@ -166,8 +166,8 @@ class View extends Component {
              <div>{this.props.stock.type}</div>
            ) : (
              <select id="type" onChange={this.handleChange.bind(this,'type')}>
-               <option value='Issue'>Issue</option>
-               <option value='Receipt'>Receipt</option>
+               <option value='Issue'>Issue (Deduct)</option>
+             <option value='Receipt'>Receipt (Add)</option>
              </select>
            );
         const reasonField = updateMode ? (

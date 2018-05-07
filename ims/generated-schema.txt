@@ -7,6 +7,16 @@ input CreateCustomerInput {
 	email: String!
 }
 
+input CreateOrderInput {
+	id: ID!
+	customerId: String!
+	partnerId: String
+	services: String!
+	when: String!
+	cost: Int!
+	discount: Int!
+}
+
 input CreatePartnerInput {
 	id: ID!
 	name: String!
@@ -71,6 +81,10 @@ input DeleteCustomerInput {
 	id: ID!
 }
 
+input DeleteOrderInput {
+	id: ID!
+}
+
 input DeletePartnerInput {
 	id: ID!
 }
@@ -124,16 +138,24 @@ type Mutation {
 	createCustomer(input: CreateCustomerInput!): Customer
 	updateCustomer(input: UpdateCustomerInput!): Customer
 	deleteCustomer(input: DeleteCustomerInput!): Customer
+	createOrder(input: CreateOrderInput!): Order
+	updateOrder(input: UpdateOrderInput!): Order
+	deleteOrder(input: DeleteOrderInput!): Order
 }
 
 type Order {
 	id: ID!
 	customerId: String!
-	partnerId: String!
+	partnerId: String
 	services: String!
 	when: String!
 	cost: Int!
 	discount: Int!
+}
+
+type OrderConnection {
+	items: [Order]
+	nextToken: String
 }
 
 type Partner {
@@ -190,6 +212,9 @@ type Query {
 	listCustomers(first: Int, after: String): CustomerConnection
 	queryCustomersByEmailIndex(email: String!, first: Int, after: String): CustomerConnection
 	queryCustomersByPhoneIndex(phone: String!, first: Int, after: String): CustomerConnection
+	getOrder(id: ID!): Order
+	listOrders(first: Int, after: String): OrderConnection
+	queryOrdersByCustomerIdIndex(customerId: String!, first: Int, after: String): OrderConnection
 }
 
 type Stock {
@@ -314,6 +339,30 @@ type Subscription {
 		phone: String
 	): Customer
 		@aws_subscribe(mutations: ["deleteCustomer"])
+	onCreateOrder(
+		id: ID,
+		customerId: String,
+		partnerId: String,
+		services: String,
+		when: String
+	): Order
+		@aws_subscribe(mutations: ["createOrder"])
+	onUpdateOrder(
+		id: ID,
+		customerId: String,
+		partnerId: String,
+		services: String,
+		when: String
+	): Order
+		@aws_subscribe(mutations: ["updateOrder"])
+	onDeleteOrder(
+		id: ID,
+		customerId: String,
+		partnerId: String,
+		services: String,
+		when: String
+	): Order
+		@aws_subscribe(mutations: ["deleteOrder"])
 }
 
 input UpdateCustomerInput {
@@ -323,6 +372,16 @@ input UpdateCustomerInput {
 	active: Boolean
 	phone: String
 	email: String
+}
+
+input UpdateOrderInput {
+	id: ID!
+	customerId: String
+	partnerId: String
+	services: String
+	when: String
+	cost: Int
+	discount: Int
 }
 
 input UpdatePartnerInput {

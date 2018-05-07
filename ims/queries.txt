@@ -105,3 +105,9 @@ mutation updateCustomer {
     active
 	}
 }
+mutation CreateOrder {
+	createOrder(input:{ id: "40e7f187-33d8-4170-9528-9662bb8e7429", customerId: "4df1322d-904b-45da-9464-093fba79ce3f", partnerId: "1", cost: 1000, when: "2018-05-07T06:30:00Z", discount: 10, services: "Gold facial" }) {
+		id
+		customerId
+	}
+}

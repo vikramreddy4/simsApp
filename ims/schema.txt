@@ -75,13 +75,13 @@
      phone: String!
      email: String!
 }
-type CustomerOrder {
+type Order {
     id: ID!
     customerId: String!
     partnerId: String
     services: String!
     when:String!
-    finalCost:Int!
+    cost:Int!
     discount:Int!
 }
  type Product {

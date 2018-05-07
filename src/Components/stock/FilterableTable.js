@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { graphql, compose } from "react-apollo";
+import React from "react";
 import Table from "./Table";
 import SearchBar from "../SearchBar";
 import Header from '../Header';
@@ -20,7 +19,6 @@ export default class FilterableTable extends React.Component {
   }
 
   render() {
-    const { product } = this.props;
     return (
       <div>
         <Header/>

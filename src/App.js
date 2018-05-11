@@ -24,6 +24,8 @@ import CustomersList from './Components/customer/List';
 import ViewOrder from './Components/order/View';
 import OrdersList from './Components/order/List';
 
+import { withAuthenticator } from 'aws-amplify-react';
+
 const App = () => (
   <Router path="/" component={App}>
     <div>
@@ -59,4 +61,4 @@ const WithProvider = () => (
   </ApolloProvider>
 );
 
-export default WithProvider;
+export default withAuthenticator(WithProvider);
